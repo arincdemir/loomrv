@@ -1,0 +1,10 @@
+# 1. Lock frequencies
+sudo cpupower frequency-set -g performance
+echo 1 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+
+# 2. Run the benchmark pinned to core 2, with max priority
+sudo nice -n -20 taskset -c 2 ./bench_runner "[interval_set]" --benchmark-samples 200
+
+# 3. Restore to normal behavior when done
+echo 0 | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo
+sudo cpupower frequency-set -g powersave

@@ -1,0 +1,294 @@
+arincdemir@192:~/workspace/loomrv/loomrv-misc$ ./run_all_benchmarks_synthetic.sh 
+[sudo] password for arincdemir: 
+=========================================
+1. Locking CPU frequencies (performance)
+=========================================
+Setting cpu: 0
+Setting cpu: 1
+Setting cpu: 2
+Setting cpu: 3
+Setting cpu: 4
+Setting cpu: 5
+Setting cpu: 6
+Setting cpu: 7
+Setting cpu: 8
+Setting cpu: 9
+Setting cpu: 10
+Setting cpu: 11
+
+=========================================
+2. Running 13 Benchmark scripts back to back
+=========================================
+
+>> Executing benchmark_synthetic.sh ...
+=====================================================
+   Synthetic Multi-Property Deduplication Benchmark  
+=====================================================
+Using existing trace: traces/synthetic_1000000_8.jsonl
+Using existing formulas in: synthetic_10
+
+-----------------------------------------------------
+ Benchmarking Scenario: best_case_shared_core.txt
+ Trace: traces/synthetic_1000000_8.jsonl
+ Formulas: synthetic_10/best_case_shared_core.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/best_case_shared_core.txt ===
+Sequential AST Nodes (Sum) : 100
+Deduplicated AST Nodes     : 28
+Reduction                  : 72 nodes (72%)
+AST Size Compression       : 3.57143x smaller
+-----------------------------------------------------
+Benchmark 1: ryjson (Sequential)
+  Time (mean ± σ):     17.084 s ±  0.048 s    [User: 13.628 s, System: 3.381 s]
+  Range (min … max):   17.017 s … 17.198 s    10 runs
+ 
+Benchmark 2: loomrv (Sequential)
+  Time (mean ± σ):      3.877 s ±  0.005 s    [User: 3.782 s, System: 0.084 s]
+  Range (min … max):    3.866 s …  3.880 s    10 runs
+ 
+Benchmark 3: loomrv (Multi-Property)
+  Time (mean ± σ):     956.0 ms ±  19.5 ms    [User: 945.3 ms, System: 8.6 ms]
+  Range (min … max):   945.2 ms … 1010.6 ms    10 runs
+ 
+  Warning: The first benchmarking run for this command was significantly slower than the rest (1.011 s). This could be caused by (filesystem) caches that were not filled until after the first run. You are already using the '--warmup' option which helps to fill these caches before the actual benchmark. You can either try to increase the warmup count further or re-run this benchmark on a quiet system in case it was a random outlier. Alternatively, consider using the '--prepare' option to clear the caches before each timing run.
+ 
+Summary
+  loomrv (Multi-Property) ran
+    4.06 ± 0.08 times faster than loomrv (Sequential)
+   17.87 ± 0.37 times faster than ryjson (Sequential)
+
+-----------------------------------------------------
+ Benchmarking Scenario: worst_case_unique_leaves.txt
+ Trace: traces/synthetic_1000000_8.jsonl
+ Formulas: synthetic_10/worst_case_unique_leaves.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/worst_case_unique_leaves.txt ===
+Sequential AST Nodes (Sum) : 90
+Deduplicated AST Nodes     : 54
+Reduction                  : 36 nodes (40%)
+AST Size Compression       : 1.66667x smaller
+-----------------------------------------------------
+Benchmark 1: ryjson (Sequential)
+  Time (mean ± σ):      9.162 s ±  0.066 s    [User: 9.031 s, System: 0.111 s]
+  Range (min … max):    9.059 s …  9.324 s    10 runs
+ 
+Benchmark 2: loomrv (Sequential)
+  Time (mean ± σ):      3.350 s ±  0.059 s    [User: 3.258 s, System: 0.083 s]
+  Range (min … max):    3.294 s …  3.500 s    10 runs
+ 
+  Warning: Statistical outliers were detected. Consider re-running this benchmark on a quiet system without any interferences from other programs. It might help to use the '--warmup' or '--prepare' options.
+ 
+Benchmark 3: loomrv (Multi-Property)
+  Time (mean ± σ):      1.896 s ±  0.003 s    [User: 1.883 s, System: 0.009 s]
+  Range (min … max):    1.892 s …  1.900 s    10 runs
+ 
+Summary
+  loomrv (Multi-Property) ran
+    1.77 ± 0.03 times faster than loomrv (Sequential)
+    4.83 ± 0.04 times faster than ryjson (Sequential)
+
+-----------------------------------------------------
+ Benchmarking Scenario: nested_best_case.txt
+ Trace: traces/synthetic_1000000_8.jsonl
+ Formulas: synthetic_10/nested_best_case.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/nested_best_case.txt ===
+Sequential AST Nodes (Sum) : 94
+Deduplicated AST Nodes     : 23
+Reduction                  : 71 nodes (75.5319%)
+AST Size Compression       : 4.08696x smaller
+-----------------------------------------------------
+Benchmark 1: ryjson (Sequential)
+  Time (mean ± σ):      7.613 s ±  0.008 s    [User: 7.488 s, System: 0.108 s]
+  Range (min … max):    7.602 s …  7.629 s    10 runs
+ 
+Benchmark 2: loomrv (Sequential)
+  Time (mean ± σ):      2.418 s ±  0.005 s    [User: 2.286 s, System: 0.085 s]
+  Range (min … max):    2.413 s …  2.429 s    10 runs
+ 
+Benchmark 3: loomrv (Multi-Property)
+  Time (mean ± σ):     654.8 ms ±  11.2 ms    [User: 643.7 ms, System: 9.5 ms]
+  Range (min … max):   647.3 ms … 683.5 ms    10 runs
+ 
+  Warning: Statistical outliers were detected. Consider re-running this benchmark on a quiet system without any interferences from other programs. It might help to use the '--warmup' or '--prepare' options.
+ 
+Summary
+  loomrv (Multi-Property) ran
+    3.69 ± 0.06 times faster than loomrv (Sequential)
+   11.63 ± 0.20 times faster than ryjson (Sequential)
+
+-----------------------------------------------------
+ Benchmarking Scenario: nested_worst_case.txt
+ Trace: traces/synthetic_1000000_8.jsonl
+ Formulas: synthetic_10/nested_worst_case.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/nested_worst_case.txt ===
+Sequential AST Nodes (Sum) : 102
+Deduplicated AST Nodes     : 78
+Reduction                  : 24 nodes (23.5294%)
+AST Size Compression       : 1.30769x smaller
+-----------------------------------------------------
+Benchmark 1: ryjson (Sequential)
+  Time (mean ± σ):      8.836 s ±  0.027 s    [User: 8.707 s, System: 0.110 s]
+  Range (min … max):    8.808 s …  8.907 s    10 runs
+ 
+Benchmark 2: loomrv (Sequential)
+  Time (mean ± σ):      2.943 s ±  0.005 s    [User: 2.809 s, System: 0.085 s]
+  Range (min … max):    2.935 s …  2.951 s    10 runs
+ 
+Benchmark 3: loomrv (Multi-Property)
+  Time (mean ± σ):      1.640 s ±  0.004 s    [User: 1.628 s, System: 0.009 s]
+  Range (min … max):    1.636 s …  1.649 s    10 runs
+ 
+Summary
+  loomrv (Multi-Property) ran
+    1.79 ± 0.01 times faster than loomrv (Sequential)
+    5.39 ± 0.02 times faster than ryjson (Sequential)
+
+Done! Benchmark results exported to results/2026-04-20_00-36-24/
+
+>> Executing benchmark_synthetic_binary.sh ...
+============================================================
+   Synthetic Multi-Property Binary Benchmark (rybinx vs loomrv --binary)
+============================================================
+Using existing trace: traces/synthetic_1000000_8.jsonl
+Using existing binary trace: traces/synthetic_1000000_8.row.bin
+Using existing formulas in: synthetic_10
+
+-----------------------------------------------------
+ Benchmarking Scenario: best_case_shared_core.txt
+ Trace:    traces/synthetic_1000000_8.row.bin
+ Formulas: synthetic_10/best_case_shared_core.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/best_case_shared_core.txt ===
+Sequential AST Nodes (Sum) : 100
+Deduplicated AST Nodes     : 28
+Reduction                  : 72 nodes (72%)
+AST Size Compression       : 3.57143x smaller
+-----------------------------------------------------
+Benchmark 1: rybinx (Sequential)
+  Time (mean ± σ):     11.266 s ±  0.029 s    [User: 10.943 s, System: 0.302 s]
+  Range (min … max):   11.237 s … 11.336 s    10 runs
+ 
+Benchmark 2: loomrv (Sequential, binary)
+  Time (mean ± σ):      2.600 s ±  0.005 s    [User: 2.572 s, System: 0.023 s]
+  Range (min … max):    2.593 s …  2.610 s    10 runs
+ 
+Benchmark 3: loomrv (Multi-Property, binary)
+  Time (mean ± σ):     815.3 ms ±  14.5 ms    [User: 811.2 ms, System: 2.6 ms]
+  Range (min … max):   806.0 ms … 852.8 ms    10 runs
+ 
+  Warning: The first benchmarking run for this command was significantly slower than the rest (852.8 ms). This could be caused by (filesystem) caches that were not filled until after the first run. You are already using the '--warmup' option which helps to fill these caches before the actual benchmark. You can either try to increase the warmup count further or re-run this benchmark on a quiet system in case it was a random outlier. Alternatively, consider using the '--prepare' option to clear the caches before each timing run.
+ 
+Summary
+  loomrv (Multi-Property, binary) ran
+    3.19 ± 0.06 times faster than loomrv (Sequential, binary)
+   13.82 ± 0.25 times faster than rybinx (Sequential)
+
+-----------------------------------------------------
+ Benchmarking Scenario: worst_case_unique_leaves.txt
+ Trace:    traces/synthetic_1000000_8.row.bin
+ Formulas: synthetic_10/worst_case_unique_leaves.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/worst_case_unique_leaves.txt ===
+Sequential AST Nodes (Sum) : 90
+Deduplicated AST Nodes     : 54
+Reduction                  : 36 nodes (40%)
+AST Size Compression       : 1.66667x smaller
+-----------------------------------------------------
+Benchmark 1: rybinx (Sequential)
+  Time (mean ± σ):      7.124 s ±  0.018 s    [User: 7.096 s, System: 0.015 s]
+  Range (min … max):    7.094 s …  7.159 s    10 runs
+ 
+Benchmark 2: loomrv (Sequential, binary)
+  Time (mean ± σ):      2.045 s ±  0.003 s    [User: 2.016 s, System: 0.025 s]
+  Range (min … max):    2.041 s …  2.051 s    10 runs
+ 
+Benchmark 3: loomrv (Multi-Property, binary)
+  Time (mean ± σ):      1.748 s ±  0.004 s    [User: 1.742 s, System: 0.003 s]
+  Range (min … max):    1.743 s …  1.756 s    10 runs
+ 
+Summary
+  loomrv (Multi-Property, binary) ran
+    1.17 ± 0.00 times faster than loomrv (Sequential, binary)
+    4.08 ± 0.01 times faster than rybinx (Sequential)
+
+-----------------------------------------------------
+ Benchmarking Scenario: nested_best_case.txt
+ Trace:    traces/synthetic_1000000_8.row.bin
+ Formulas: synthetic_10/nested_best_case.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/nested_best_case.txt ===
+Sequential AST Nodes (Sum) : 94
+Deduplicated AST Nodes     : 23
+Reduction                  : 71 nodes (75.5319%)
+AST Size Compression       : 4.08696x smaller
+-----------------------------------------------------
+Benchmark 1: rybinx (Sequential)
+  Time (mean ± σ):      5.133 s ±  0.032 s    [User: 5.108 s, System: 0.015 s]
+  Range (min … max):    5.109 s …  5.215 s    10 runs
+ 
+  Warning: Statistical outliers were detected. Consider re-running this benchmark on a quiet system without any interferences from other programs. It might help to use the '--warmup' or '--prepare' options.
+ 
+Benchmark 2: loomrv (Sequential, binary)
+  Time (mean ± σ):      1.234 s ±  0.003 s    [User: 1.206 s, System: 0.025 s]
+  Range (min … max):    1.231 s …  1.242 s    10 runs
+ 
+Benchmark 3: loomrv (Multi-Property, binary)
+  Time (mean ± σ):     542.5 ms ±  11.2 ms    [User: 539.0 ms, System: 2.4 ms]
+  Range (min … max):   534.2 ms … 570.2 ms    10 runs
+ 
+Summary
+  loomrv (Multi-Property, binary) ran
+    2.28 ± 0.05 times faster than loomrv (Sequential, binary)
+    9.46 ± 0.20 times faster than rybinx (Sequential)
+
+-----------------------------------------------------
+ Benchmarking Scenario: nested_worst_case.txt
+ Trace:    traces/synthetic_1000000_8.row.bin
+ Formulas: synthetic_10/nested_worst_case.txt
+-----------------------------------------------------
+=== Node Count Report: synthetic_10/nested_worst_case.txt ===
+Sequential AST Nodes (Sum) : 102
+Deduplicated AST Nodes     : 78
+Reduction                  : 24 nodes (23.5294%)
+AST Size Compression       : 1.30769x smaller
+-----------------------------------------------------
+Benchmark 1: rybinx (Sequential)
+  Time (mean ± σ):      6.256 s ±  0.010 s    [User: 6.230 s, System: 0.016 s]
+  Range (min … max):    6.242 s …  6.272 s    10 runs
+ 
+Benchmark 2: loomrv (Sequential, binary)
+  Time (mean ± σ):      1.647 s ±  0.003 s    [User: 1.620 s, System: 0.024 s]
+  Range (min … max):    1.643 s …  1.650 s    10 runs
+ 
+Benchmark 3: loomrv (Multi-Property, binary)
+  Time (mean ± σ):      1.492 s ±  0.002 s    [User: 1.486 s, System: 0.003 s]
+  Range (min … max):    1.489 s …  1.496 s    10 runs
+ 
+Summary
+  loomrv (Multi-Property, binary) ran
+    1.10 ± 0.00 times faster than loomrv (Sequential, binary)
+    4.19 ± 0.01 times faster than rybinx (Sequential)
+
+Done! Benchmark results exported to results/2026-04-20_00-48-30/
+
+=========================================
+3. Restoring CPU settings (powersave)
+=========================================
+Setting cpu: 0
+Setting cpu: 1
+Setting cpu: 2
+Setting cpu: 3
+Setting cpu: 4
+Setting cpu: 5
+Setting cpu: 6
+Setting cpu: 7
+Setting cpu: 8
+Setting cpu: 9
+Setting cpu: 10
+Setting cpu: 11
+
+All benchmarks finished! Results exported to: results/2026-04-20_00-36-24
+arincdemir@192:~/workspace/loomrv/loomrv-misc$ 
+

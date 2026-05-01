@@ -1,0 +1,487 @@
+
+=== Results from: loomrv-benchmark-dense-binary.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10 Dense1                                  | 0.09450
+AbsentAQ10 Dense10                                 | 0.05357
+AbsentAQ10 Dense100                                | 0.05152
+AbsentAQ100 Dense1                                 | 0.08694
+AbsentAQ100 Dense10                                | 0.04555
+AbsentAQ100 Dense100                               | 0.03847
+AbsentAQ1000 Dense1                                | 0.08589
+AbsentAQ1000 Dense10                               | 0.04336
+AbsentAQ1000 Dense100                              | 0.03755
+AbsentBQR10 Dense1                                 | 0.14209
+AbsentBQR10 Dense10                                | 0.09449
+AbsentBQR10 Dense100                               | 0.09432
+AbsentBQR100 Dense1                                | 0.10521
+AbsentBQR100 Dense10                               | 0.03083
+AbsentBQR100 Dense100                              | 0.01449
+AbsentBQR1000 Dense1                               | 0.09900
+AbsentBQR1000 Dense10                              | 0.02196
+AbsentBQR1000 Dense100                             | 0.00550
+AbsentBR10 Dense1                                  | 0.07016
+AbsentBR10 Dense10                                 | 0.04181
+AbsentBR10 Dense100                                | 0.04084
+AbsentBR100 Dense1                                 | 0.06731
+AbsentBR100 Dense10                                | 0.03690
+AbsentBR100 Dense100                               | 0.03207
+AbsentBR1000 Dense1                                | 0.06688
+AbsentBR1000 Dense10                               | 0.03596
+AbsentBR1000 Dense100                              | 0.03193
+AlwaysAQ10 Dense1                                  | 0.09149
+AlwaysAQ10 Dense10                                 | 0.05053
+AlwaysAQ10 Dense100                                | 0.04888
+AlwaysAQ100 Dense1                                 | 0.08321
+AlwaysAQ100 Dense10                                | 0.04280
+AlwaysAQ100 Dense100                               | 0.03591
+AlwaysAQ1000 Dense1                                | 0.08254
+AlwaysAQ1000 Dense10                               | 0.04129
+AlwaysAQ1000 Dense100                              | 0.03505
+AlwaysBQR10 Dense1                                 | 0.12741
+AlwaysBQR10 Dense10                                | 0.08491
+AlwaysBQR10 Dense100                               | 0.08478
+AlwaysBQR100 Dense1                                | 0.09374
+AlwaysBQR100 Dense10                               | 0.02761
+AlwaysBQR100 Dense100                              | 0.01310
+AlwaysBQR1000 Dense1                               | 0.08796
+AlwaysBQR1000 Dense10                              | 0.02019
+AlwaysBQR1000 Dense100                             | 0.00520
+AlwaysBR10 Dense1                                  | 0.06754
+AlwaysBR10 Dense10                                 | 0.04003
+AlwaysBR10 Dense100                                | 0.03874
+AlwaysBR100 Dense1                                 | 0.06458
+AlwaysBR100 Dense10                                | 0.03547
+AlwaysBR100 Dense100                               | 0.03138
+AlwaysBR1000 Dense1                                | 0.06355
+AlwaysBR1000 Dense10                               | 0.03453
+AlwaysBR1000 Dense100                              | 0.03052
+RecurBQR10 Dense1                                  | 0.14156
+RecurBQR10 Dense10                                 | 0.08067
+RecurBQR10 Dense100                                | 0.08095
+RecurBQR100 Dense1                                 | 0.11131
+RecurBQR100 Dense10                                | 0.02862
+RecurBQR100 Dense100                               | 0.01145
+RecurBQR1000 Dense1                                | 0.10786
+RecurBQR1000 Dense10                               | 0.02270
+RecurBQR1000 Dense100                              | 0.00519
+RecurGLB10 Dense1                                  | 0.06200
+RecurGLB10 Dense10                                 | 0.03651
+RecurGLB10 Dense100                                | 0.03669
+RecurGLB100 Dense1                                 | 0.04879
+RecurGLB100 Dense10                                | 0.01313
+RecurGLB100 Dense100                               | 0.00646
+RecurGLB1000 Dense1                                | 0.04707
+RecurGLB1000 Dense10                               | 0.01066
+RecurGLB1000 Dense100                              | 0.00354
+RespondBQR10 Dense1                                | 0.21014
+RespondBQR10 Dense10                               | 0.14518
+RespondBQR10 Dense100                              | 0.14518
+RespondBQR100 Dense1                               | 0.15270
+RespondBQR100 Dense10                              | 0.04537
+RespondBQR100 Dense100                             | 0.02248
+RespondBQR1000 Dense1                              | 0.14279
+RespondBQR1000 Dense10                             | 0.03039
+RespondBQR1000 Dense100                            | 0.00703
+RespondGLB10 Dense1                                | 0.11559
+RespondGLB10 Dense10                               | 0.07136
+RespondGLB10 Dense100                              | 0.07124
+RespondGLB100 Dense1                               | 0.08768
+RespondGLB100 Dense10                              | 0.02426
+RespondGLB100 Dense100                             | 0.01057
+RespondGLB1000 Dense1                              | 0.08385
+RespondGLB1000 Dense10                             | 0.01834
+RespondGLB1000 Dense100                            | 0.00476
+
+=== Results from: loomrv-benchmark-dense.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10 Dense1                                  | 0.14817
+AbsentAQ10 Dense10                                 | 0.08421
+AbsentAQ10 Dense100                                | 0.08184
+AbsentAQ100 Dense1                                 | 0.13872
+AbsentAQ100 Dense10                                | 0.07196
+AbsentAQ100 Dense100                               | 0.06071
+AbsentAQ1000 Dense1                                | 0.13704
+AbsentAQ1000 Dense10                               | 0.06945
+AbsentAQ1000 Dense100                              | 0.05910
+AbsentBQR10 Dense1                                 | 0.22391
+AbsentBQR10 Dense10                                | 0.14751
+AbsentBQR10 Dense100                               | 0.14792
+AbsentBQR100 Dense1                                | 0.16447
+AbsentBQR100 Dense10                               | 0.04677
+AbsentBQR100 Dense100                              | 0.02233
+AbsentBQR1000 Dense1                               | 0.15549
+AbsentBQR1000 Dense10                              | 0.03262
+AbsentBQR1000 Dense100                             | 0.00740
+AbsentBR10 Dense1                                  | 0.12606
+AbsentBR10 Dense10                                 | 0.07358
+AbsentBR10 Dense100                                | 0.07099
+AbsentBR100 Dense1                                 | 0.12060
+AbsentBR100 Dense10                                | 0.06521
+AbsentBR100 Dense100                               | 0.05702
+AbsentBR1000 Dense1                                | 0.11935
+AbsentBR1000 Dense10                               | 0.06323
+AbsentBR1000 Dense100                              | 0.05592
+AlwaysAQ10 Dense1                                  | 0.14650
+AlwaysAQ10 Dense10                                 | 0.08302
+AlwaysAQ10 Dense100                                | 0.08009
+AlwaysAQ100 Dense1                                 | 0.13631
+AlwaysAQ100 Dense10                                | 0.06983
+AlwaysAQ100 Dense100                               | 0.05929
+AlwaysAQ1000 Dense1                                | 0.13445
+AlwaysAQ1000 Dense10                               | 0.06775
+AlwaysAQ1000 Dense100                              | 0.05760
+AlwaysBQR10 Dense1                                 | 0.20732
+AlwaysBQR10 Dense10                                | 0.13656
+AlwaysBQR10 Dense100                               | 0.13665
+AlwaysBQR100 Dense1                                | 0.15202
+AlwaysBQR100 Dense10                               | 0.04318
+AlwaysBQR100 Dense100                              | 0.02058
+AlwaysBQR1000 Dense1                               | 0.14327
+AlwaysBQR1000 Dense10                              | 0.03018
+AlwaysBQR1000 Dense100                             | 0.00706
+AlwaysBR10 Dense1                                  | 0.12287
+AlwaysBR10 Dense10                                 | 0.07168
+AlwaysBR10 Dense100                                | 0.06879
+AlwaysBR100 Dense1                                 | 0.11706
+AlwaysBR100 Dense10                                | 0.06336
+AlwaysBR100 Dense100                               | 0.05501
+AlwaysBR1000 Dense1                                | 0.11681
+AlwaysBR1000 Dense10                               | 0.06184
+AlwaysBR1000 Dense100                              | 0.05423
+RecurBQR10 Dense1                                  | 0.21577
+RecurBQR10 Dense10                                 | 0.12083
+RecurBQR10 Dense100                                | 0.12113
+RecurBQR100 Dense1                                 | 0.16988
+RecurBQR100 Dense10                                | 0.04270
+RecurBQR100 Dense100                               | 0.01723
+RecurBQR1000 Dense1                                | 0.16463
+RecurBQR1000 Dense10                               | 0.03334
+RecurBQR1000 Dense100                              | 0.00706
+RecurGLB10 Dense1                                  | 0.10305
+RecurGLB10 Dense10                                 | 0.05823
+RecurGLB10 Dense100                                | 0.05827
+RecurGLB100 Dense1                                 | 0.08179
+RecurGLB100 Dense10                                | 0.02168
+RecurGLB100 Dense100                               | 0.00931
+RecurGLB1000 Dense1                                | 0.07927
+RecurGLB1000 Dense10                               | 0.01788
+RecurGLB1000 Dense100                              | 0.00446
+RespondBQR10 Dense1                                | 0.31641
+RespondBQR10 Dense10                               | 0.21892
+RespondBQR10 Dense100                              | 0.21788
+RespondBQR100 Dense1                               | 0.22702
+RespondBQR100 Dense10                              | 0.06761
+RespondBQR100 Dense100                             | 0.03480
+RespondBQR1000 Dense1                              | 0.21296
+RespondBQR1000 Dense10                             | 0.04435
+RespondBQR1000 Dense100                            | 0.00969
+RespondGLB10 Dense1                                | 0.17951
+RespondGLB10 Dense10                               | 0.10743
+RespondGLB10 Dense100                              | 0.10773
+RespondGLB100 Dense1                               | 0.13749
+RespondGLB100 Dense10                              | 0.03676
+RespondGLB100 Dense100                             | 0.01574
+RespondGLB1000 Dense1                              | 0.13141
+RespondGLB1000 Dense10                             | 0.02770
+RespondGLB1000 Dense100                            | 0.00625
+
+=== Results from: loomrv-benchmark-multi-and-binary.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_MultiProperty_AND_30_binary               | 3.95540
+
+=== Results from: loomrv-benchmark-multi-and.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_MultiProperty_AND_30                      | 4.27244
+
+=== Results from: loomrv-benchmark-multi-binary.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_MultiProperty_30_binary                   | 3.82037
+
+=== Results from: loomrv-benchmark-multi.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_MultiProperty_30                          | 4.01572
+
+=== Results from: loomrv-benchmark-single-binary.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+loomrv_Sequential_Binary_30                 | 5.94987
+
+=== Results from: loomrv-benchmark-single-seq.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+loomrv_Sequential_30                        | 10.54457
+
+=== Results from: rybinx-benchmark-dense.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10 Dense1                                  | 0.35907
+AbsentAQ10 Dense10                                 | 0.20280
+AbsentAQ10 Dense100                                | 0.20118
+AbsentAQ100 Dense1                                 | 0.31966
+AbsentAQ100 Dense10                                | 0.15831
+AbsentAQ100 Dense100                               | 0.13083
+AbsentAQ1000 Dense1                                | 0.31344
+AbsentAQ1000 Dense10                               | 0.15026
+AbsentAQ1000 Dense100                              | 0.12650
+AbsentBQR10 Dense1                                 | 0.37618
+AbsentBQR10 Dense10                                | 0.26642
+AbsentBQR10 Dense100                               | 0.26649
+AbsentBQR100 Dense1                                | 0.24938
+AbsentBQR100 Dense10                               | 0.08095
+AbsentBQR100 Dense100                              | 0.04636
+AbsentBQR1000 Dense1                               | 0.22997
+AbsentBQR1000 Dense10                              | 0.05410
+AbsentBQR1000 Dense100                             | 0.01897
+AbsentBR10 Dense1                                  | 0.29173
+AbsentBR10 Dense10                                 | 0.18057
+AbsentBR10 Dense100                                | 0.17626
+AbsentBR100 Dense1                                 | 0.27496
+AbsentBR100 Dense10                                | 0.15564
+AbsentBR100 Dense100                               | 0.13805
+AbsentBR1000 Dense1                                | 0.27482
+AbsentBR1000 Dense10                               | 0.15149
+AbsentBR1000 Dense100                              | 0.13537
+AlwaysAQ10 Dense1                                  | 0.37549
+AlwaysAQ10 Dense10                                 | 0.20247
+AlwaysAQ10 Dense100                                | 0.19793
+AlwaysAQ100 Dense1                                 | 0.32213
+AlwaysAQ100 Dense10                                | 0.15384
+AlwaysAQ100 Dense100                               | 0.12302
+AlwaysAQ1000 Dense1                                | 0.31652
+AlwaysAQ1000 Dense10                               | 0.14381
+AlwaysAQ1000 Dense100                              | 0.11514
+AlwaysBQR10 Dense1                                 | 0.54616
+AlwaysBQR10 Dense10                                | 0.37067
+AlwaysBQR10 Dense100                               | 0.36979
+AlwaysBQR100 Dense1                                | 0.37121
+AlwaysBQR100 Dense10                               | 0.11382
+AlwaysBQR100 Dense100                              | 0.05954
+AlwaysBQR1000 Dense1                               | 0.34593
+AlwaysBQR1000 Dense10                              | 0.07615
+AlwaysBQR1000 Dense100                             | 0.02336
+AlwaysBR10 Dense1                                  | 0.30507
+AlwaysBR10 Dense10                                 | 0.17695
+AlwaysBR10 Dense100                                | 0.17147
+AlwaysBR100 Dense1                                 | 0.28593
+AlwaysBR100 Dense10                                | 0.15058
+AlwaysBR100 Dense100                               | 0.12856
+AlwaysBR1000 Dense1                                | 0.28417
+AlwaysBR1000 Dense10                               | 0.14602
+AlwaysBR1000 Dense100                              | 0.12566
+RecurBQR10 Dense1                                  | 0.52128
+RecurBQR10 Dense10                                 | 0.31222
+RecurBQR10 Dense100                                | 0.31239
+RecurBQR100 Dense1                                 | 0.38794
+RecurBQR100 Dense10                                | 0.10341
+RecurBQR100 Dense100                               | 0.04709
+RecurBQR1000 Dense1                                | 0.37348
+RecurBQR1000 Dense10                               | 0.07980
+RecurBQR1000 Dense100                              | 0.02195
+RecurGLB10 Dense1                                  | 0.19250
+RecurGLB10 Dense10                                 | 0.11901
+RecurGLB10 Dense100                                | 0.11873
+RecurGLB100 Dense1                                 | 0.13940
+RecurGLB100 Dense10                                | 0.04398
+RecurGLB100 Dense100                               | 0.02457
+RecurGLB1000 Dense1                                | 0.13315
+RecurGLB1000 Dense10                               | 0.03504
+RecurGLB1000 Dense100                              | 0.01493
+RespondBQR10 Dense1                                | 0.89904
+RespondBQR10 Dense10                               | 0.64605
+RespondBQR10 Dense100                              | 0.64389
+RespondBQR100 Dense1                               | 0.60778
+RespondBQR100 Dense10                              | 0.18943
+RespondBQR100 Dense100                             | 0.10402
+RespondBQR1000 Dense1                              | 0.56456
+RespondBQR1000 Dense10                             | 0.11975
+RespondBQR1000 Dense100                            | 0.03162
+RespondGLB10 Dense1                                | 0.53906
+RespondGLB10 Dense10                               | 0.35017
+RespondGLB10 Dense100                              | 0.35139
+RespondGLB100 Dense1                               | 0.36646
+RespondGLB100 Dense10                              | 0.10613
+RespondGLB100 Dense100                             | 0.05303
+RespondGLB1000 Dense1                              | 0.34641
+RespondGLB1000 Dense10                             | 0.07598
+RespondGLB1000 Dense100                            | 0.02221
+
+=== Results from: rybinx-benchmark-multi-and.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx_Combined_AND_30                             | 20.73296
+
+=== Results from: rybinx-benchmark-multi.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx_Sequential_30                               | 21.02744
+
+=== Results from: ryjson-benchmark-dense.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10 Dense1                                  | 0.43074
+AbsentAQ10 Dense10                                 | 0.24690
+AbsentAQ10 Dense100                                | 0.23934
+AbsentAQ100 Dense1                                 | 0.38827
+AbsentAQ100 Dense10                                | 0.19788
+AbsentAQ100 Dense100                               | 0.16574
+AbsentAQ1000 Dense1                                | 0.38296
+AbsentAQ1000 Dense10                               | 0.18856
+AbsentAQ1000 Dense100                              | 0.16018
+AbsentBQR10 Dense1                                 | 0.49340
+AbsentBQR10 Dense10                                | 0.34677
+AbsentBQR10 Dense100                               | 0.34725
+AbsentBQR100 Dense1                                | 0.33394
+AbsentBQR100 Dense10                               | 0.10701
+AbsentBQR100 Dense100                              | 0.06063
+AbsentBQR1000 Dense1                               | 0.30957
+AbsentBQR1000 Dense10                              | 0.07287
+AbsentBQR1000 Dense100                             | 0.02569
+AbsentBR10 Dense1                                  | 0.35020
+AbsentBR10 Dense10                                 | 0.21547
+AbsentBR10 Dense100                                | 0.21101
+AbsentBR100 Dense1                                 | 0.33272
+AbsentBR100 Dense10                                | 0.18706
+AbsentBR100 Dense100                               | 0.16592
+AbsentBR1000 Dense1                                | 0.33051
+AbsentBR1000 Dense10                               | 0.18245
+AbsentBR1000 Dense100                              | 0.16324
+AlwaysAQ10 Dense1                                  | 0.44870
+AlwaysAQ10 Dense10                                 | 0.24711
+AlwaysAQ10 Dense100                                | 0.23904
+AlwaysAQ100 Dense1                                 | 0.40006
+AlwaysAQ100 Dense10                                | 0.19233
+AlwaysAQ100 Dense100                               | 0.15640
+AlwaysAQ1000 Dense1                                | 0.39379
+AlwaysAQ1000 Dense10                               | 0.18376
+AlwaysAQ1000 Dense100                              | 0.15031
+AlwaysBQR10 Dense1                                 | 0.67413
+AlwaysBQR10 Dense10                                | 0.45517
+AlwaysBQR10 Dense100                               | 0.45558
+AlwaysBQR100 Dense1                                | 0.46626
+AlwaysBQR100 Dense10                               | 0.14280
+AlwaysBQR100 Dense100                              | 0.07515
+AlwaysBQR1000 Dense1                               | 0.43786
+AlwaysBQR1000 Dense10                              | 0.09740
+AlwaysBQR1000 Dense100                             | 0.02921
+AlwaysBR10 Dense1                                  | 0.36488
+AlwaysBR10 Dense10                                 | 0.21219
+AlwaysBR10 Dense100                                | 0.20523
+AlwaysBR100 Dense1                                 | 0.34326
+AlwaysBR100 Dense10                                | 0.18130
+AlwaysBR100 Dense100                               | 0.15613
+AlwaysBR1000 Dense1                                | 0.34051
+AlwaysBR1000 Dense10                               | 0.17637
+AlwaysBR1000 Dense100                              | 0.15286
+RecurBQR10 Dense1                                  | 0.63388
+RecurBQR10 Dense10                                 | 0.37713
+RecurBQR10 Dense100                                | 0.37689
+RecurBQR100 Dense1                                 | 0.47585
+RecurBQR100 Dense10                                | 0.12699
+RecurBQR100 Dense100                               | 0.05832
+RecurBQR1000 Dense1                                | 0.45866
+RecurBQR1000 Dense10                               | 0.09906
+RecurBQR1000 Dense100                              | 0.02751
+RecurGLB10 Dense1                                  | 0.24037
+RecurGLB10 Dense10                                 | 0.14758
+RecurGLB10 Dense100                                | 0.14722
+RecurGLB100 Dense1                                 | 0.17848
+RecurGLB100 Dense10                                | 0.05547
+RecurGLB100 Dense100                               | 0.03117
+RecurGLB1000 Dense1                                | 0.17060
+RecurGLB1000 Dense10                               | 0.04462
+RecurGLB1000 Dense100                              | 0.01893
+RespondBQR10 Dense1                                | 1.10010
+RespondBQR10 Dense10                               | 0.78583
+RespondBQR10 Dense100                              | 0.78126
+RespondBQR100 Dense1                               | 0.74874
+RespondBQR100 Dense10                              | 0.23320
+RespondBQR100 Dense100                             | 0.12756
+RespondBQR1000 Dense1                              | 0.69697
+RespondBQR1000 Dense10                             | 0.14839
+RespondBQR1000 Dense100                            | 0.04009
+RespondGLB10 Dense1                                | 0.61296
+RespondGLB10 Dense10                               | 0.39909
+RespondGLB10 Dense100                              | 0.39837
+RespondGLB100 Dense1                               | 0.41881
+RespondGLB100 Dense10                              | 0.12407
+RespondGLB100 Dense100                             | 0.06282
+RespondGLB1000 Dense1                              | 0.39530
+RespondGLB1000 Dense10                             | 0.08863
+RespondGLB1000 Dense100                            | 0.02743
+
+=== Results from: ryjson-benchmark-multi-and.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson_Combined_AND_30                             | 23.74372
+
+=== Results from: ryjson-benchmark-multi.sh".d751a12fea0f1b3b148150206cd834c30222aabb.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson_Sequential_30                               | 27.08712
+
+
+
+
+=== Results from: bench_best_case_shared_core_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 16.70621
+loomrv (Sequential)                             | 3.81619
+loomrv (Multi-Property)                         | 0.93612
+
+=== Results from: bench_nested_best_case_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 7.53321
+loomrv (Sequential)                             | 2.39256
+loomrv (Multi-Property)                         | 0.63897
+
+=== Results from: bench_nested_worst_case_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 8.76407
+loomrv (Sequential)                             | 2.92834
+loomrv (Multi-Property)                         | 1.62846
+
+=== Results from: bench_worst_case_unique_leaves_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 8.99907
+loomrv (Sequential)                             | 3.28852
+loomrv (Multi-Property)                         | 1.87559
+
+
+
+=== Results from: bench_binary_best_case_shared_core_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 11.07184
+loomrv (Sequential, binary)                 | 2.57472
+loomrv (Multi-Property, binary)             | 0.80400
+
+=== Results from: bench_binary_nested_best_case_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 5.08553
+loomrv (Sequential, binary)                 | 1.22269
+loomrv (Multi-Property, binary)             | 0.53079
+
+=== Results from: bench_binary_nested_worst_case_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 6.20615
+loomrv (Sequential, binary)                 | 1.63614
+loomrv (Multi-Property, binary)             | 1.47426
+
+=== Results from: bench_binary_worst_case_unique_leaves_10props_1000000ev_d751a12fea0f1b3b148150206cd834c30222aabb.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 7.03868
+loomrv (Sequential, binary)                 | 2.02250
+loomrv (Multi-Property, binary)             | 1.74079

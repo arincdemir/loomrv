@@ -1,0 +1,28 @@
+# Build artifacts — never send to Docker daemon
+build/
+
+# Test data — downloaded from GitHub release during docker build
+data/
+
+# reelay subproject — cloned fresh from GitHub during docker build
+reelay/
+
+# Git history — commit hash is passed via --build-arg GIT_COMMIT instead
+.git/
+
+# Docker infrastructure files (no need to COPY these into the image)
+Dockerfile
+.dockerignore
+BENCHMARKS.md
+
+# Compiled object files and static libraries
+*.o
+*.a
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS metadata
+.DS_Store

@@ -1,0 +1,16 @@
+perf record --call-graph dwarf -F 999 ./loomrv-perf
+hotspot perf.data
+
+sudo perf stat -e cycles,instructions,cache-references,cache-misses,branches,branch-misses ./loomrv-perf
+
+
+
+ ./loomrv-misc/loomrv-benchmark-dense.sh "data/fullsuite"
+
+
+ ./loomrv-misc/generate_traces.py --length 100 --out loomrv-misc/traces/trace_1m_random.jsonl
+
+ ./loomrv-misc/generate_test_formulas.py --count 10 -o ./loomrv-misc/synthetic_10
+
+
+ ./loomrv-misc/benchmark_synthetic_dense.sh 30 10000
