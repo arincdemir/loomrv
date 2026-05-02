@@ -1,0 +1,242 @@
+
+=== Results from: bench_binary_discrete_best_case_shared_core_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 2.79792
+loomrv (Sequential, binary)                        | 0.61090
+loomrv (Multi-Property, binary)                    | 0.17537
+
+=== Results from: bench_binary_discrete_nested_best_case_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 1.34109
+loomrv (Sequential, binary)                        | 0.39185
+loomrv (Multi-Property, binary)                    | 0.12735
+
+=== Results from: bench_binary_discrete_nested_worst_case_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 2.22940
+loomrv (Sequential, binary)                        | 0.50205
+loomrv (Multi-Property, binary)                    | 0.34015
+
+=== Results from: bench_binary_discrete_worst_case_unique_leaves_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx (Sequential)                                | 1.97926
+loomrv (Sequential, binary)                        | 0.52448
+loomrv (Multi-Property, binary)                    | 0.34570
+
+=== Results from: bench_discrete_best_case_shared_core_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 5.08614
+loomrv (Sequential)                                | 1.38682
+loomrv (Multi-Property)                            | 0.25200
+
+=== Results from: bench_discrete_nested_best_case_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 3.31645
+loomrv (Sequential)                                | 1.10093
+loomrv (Multi-Property)                            | 0.20573
+
+=== Results from: bench_discrete_nested_worst_case_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 4.40190
+loomrv (Sequential)                                | 1.22979
+loomrv (Multi-Property)                            | 0.38459
+
+=== Results from: bench_discrete_worst_case_unique_leaves_10props_1000000ev_f9a2351551f96b079ac23148a4ff95c8617bc495.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson (Sequential)                                | 3.61680
+loomrv (Sequential)                                | 1.32878
+loomrv (Multi-Property)                            | 0.41979
+
+=== Results from: loomrv-discrete-benchmark-bin.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10                                         | 0.03854
+AbsentAQ100                                        | 0.03797
+AbsentAQ1000                                       | 0.03772
+AbsentBQR10                                        | 0.04989
+AbsentBQR100                                       | 0.05002
+AbsentBQR1000                                      | 0.04951
+AbsentBR10                                         | 0.03238
+AbsentBR100                                        | 0.03236
+AbsentBR1000                                       | 0.03228
+AlwaysAQ10                                         | 0.03737
+AlwaysAQ100                                        | 0.03698
+AlwaysAQ1000                                       | 0.03682
+AlwaysBQR10                                        | 0.04307
+AlwaysBQR100                                       | 0.04181
+AlwaysBQR1000                                      | 0.04238
+AlwaysBR10                                         | 0.03139
+AlwaysBR100                                        | 0.03159
+AlwaysBR1000                                       | 0.03161
+RecurBQR10                                         | 0.05186
+RecurBQR100                                        | 0.05118
+RecurBQR1000                                       | 0.05073
+RecurGLB10                                         | 0.02810
+RecurGLB100                                        | 0.02792
+RecurGLB1000                                       | 0.02791
+RespondBQR10                                       | 0.06233
+RespondBQR100                                      | 0.06308
+RespondBQR1000                                     | 0.06376
+RespondGLB10                                       | 0.04173
+RespondGLB100                                      | 0.04101
+RespondGLB1000                                     | 0.04084
+
+=== Results from: loomrv-discrete-benchmark-json.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10                                         | 0.08819
+AbsentAQ100                                        | 0.08584
+AbsentAQ1000                                       | 0.08692
+AbsentBQR10                                        | 0.11805
+AbsentBQR100                                       | 0.11367
+AbsentBQR1000                                      | 0.11429
+AbsentBR10                                         | 0.08222
+AbsentBR100                                        | 0.08238
+AbsentBR1000                                       | 0.08229
+AlwaysAQ10                                         | 0.08770
+AlwaysAQ100                                        | 0.08625
+AlwaysAQ1000                                       | 0.08679
+AlwaysBQR10                                        | 0.11075
+AlwaysBQR100                                       | 0.10523
+AlwaysBQR1000                                      | 0.10508
+AlwaysBR10                                         | 0.08104
+AlwaysBR100                                        | 0.08231
+AlwaysBR1000                                       | 0.08102
+RecurBQR10                                         | 0.11667
+RecurBQR100                                        | 0.11435
+RecurBQR1000                                       | 0.11353
+RecurGLB10                                         | 0.06389
+RecurGLB100                                        | 0.06098
+RecurGLB1000                                       | 0.06070
+RespondBQR10                                       | 0.14728
+RespondBQR100                                      | 0.14479
+RespondBQR1000                                     | 0.14245
+RespondGLB10                                       | 0.09345
+RespondGLB100                                      | 0.09065
+RespondGLB1000                                     | 0.09013
+
+=== Results from: loomrv-discrete-benchmark-multi-and-binary.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_Discrete_MultiProperty_AND_30_binary      | 0.70447
+
+=== Results from: loomrv-discrete-benchmark-multi-and.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_Discrete_MultiProperty_AND_30             | 0.80372
+
+=== Results from: loomrv-discrete-benchmark-multi-binary.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_Discrete_MultiProperty_30_binary          | 0.70803
+
+=== Results from: loomrv-discrete-benchmark-multi.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+Combined_Discrete_MultiProperty_30                 | 0.79714
+
+=== Results from: loomrv-discrete-benchmark-single-binary.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+loomrv_Discrete_Sequential_Binary_30               | 1.57721
+
+=== Results from: loomrv-discrete-benchmark-single-seq.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+loomrv_Discrete_Sequential_30                      | 4.41507
+
+=== Results from: rybinx-discrete-benchmark-multi-and.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx_Discrete_Combined_AND_30                    | 3.63169
+
+=== Results from: rybinx-discrete-benchmark-multi.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+rybinx_Discrete_Sequential_30                      | 4.65693
+
+=== Results from: rybinx-discrete-benchmark.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10                                         | 0.06978
+AbsentAQ100                                        | 0.06140
+AbsentAQ1000                                       | 0.06002
+AbsentBQR10                                        | 0.08822
+AbsentBQR100                                       | 0.07063
+AbsentBQR1000                                      | 0.06737
+AbsentBR10                                         | 0.09043
+AbsentBR100                                        | 0.08916
+AbsentBR1000                                       | 0.08898
+AlwaysAQ10                                         | 0.06781
+AlwaysAQ100                                        | 0.05967
+AlwaysAQ1000                                       | 0.05881
+AlwaysBQR10                                        | 0.08178
+AlwaysBQR100                                       | 0.06946
+AlwaysBQR1000                                      | 0.06623
+AlwaysBR10                                         | 0.08847
+AlwaysBR100                                        | 0.08751
+AlwaysBR1000                                       | 0.08818
+RecurBQR10                                         | 0.10931
+RecurBQR100                                        | 0.08861
+RecurBQR1000                                       | 0.08556
+RecurGLB10                                         | 0.07642
+RecurGLB100                                        | 0.05135
+RecurGLB1000                                       | 0.04826
+RespondBQR10                                       | 0.13125
+RespondBQR100                                      | 0.10211
+RespondBQR1000                                     | 0.09986
+RespondGLB10                                       | 0.11542
+RespondGLB100                                      | 0.08254
+RespondGLB1000                                     | 0.07786
+
+=== Results from: ryjson-discrete-benchmark-multi-and.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson_Discrete_Combined_AND_30                    | 6.37758
+
+=== Results from: ryjson-discrete-benchmark-multi.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+ryjson_Discrete_Sequential_30                      | 9.34467
+
+=== Results from: ryjson-discrete-benchmark.sh".f9a2351551f96b079ac23148a4ff95c8617bc495.results.json ===
+Benchmark Name                                     | Min Time (s)   
+----------------------------------------------------------------------
+AbsentAQ10                                         | 0.15366
+AbsentAQ100                                        | 0.14328
+AbsentAQ1000                                       | 0.14183
+AbsentBQR10                                        | 0.24343
+AbsentBQR100                                       | 0.21733
+AbsentBQR1000                                      | 0.21608
+AbsentBR10                                         | 0.16259
+AbsentBR100                                        | 0.16476
+AbsentBR1000                                       | 0.16186
+AlwaysAQ10                                         | 0.15423
+AlwaysAQ100                                        | 0.14497
+AlwaysAQ1000                                       | 0.14211
+AlwaysBQR10                                        | 0.23578
+AlwaysBQR100                                       | 0.21861
+AlwaysBQR1000                                      | 0.21141
+AlwaysBR10                                         | 0.16410
+AlwaysBR100                                        | 0.16422
+AlwaysBR1000                                       | 0.16236
+RecurBQR10                                         | 0.28089
+RecurBQR100                                        | 0.25499
+RecurBQR1000                                       | 0.25217
+RecurGLB10                                         | 0.12623
+RecurGLB100                                        | 0.09803
+RecurGLB1000                                       | 0.09413
+RespondBQR10                                       | 0.36934
+RespondBQR100                                      | 0.34182
+RespondBQR1000                                     | 0.33333
+RespondGLB10                                       | 0.24192
+RespondGLB100                                      | 0.20471
+RespondGLB1000                                     | 0.20101
