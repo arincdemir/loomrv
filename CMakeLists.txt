@@ -19,7 +19,7 @@ include(FetchContent)
 FetchContent_Declare(
     simdjson
     GIT_REPOSITORY https://github.com/simdjson/simdjson.git
-    GIT_TAG        v4.3.0 
+    GIT_TAG        v4.6.3 
 )
 
 FetchContent_MakeAvailable(simdjson)
@@ -27,7 +27,7 @@ FetchContent_MakeAvailable(simdjson)
 FetchContent_Declare(
   cpp-peglib
   GIT_REPOSITORY https://github.com/yhirose/cpp-peglib.git
-  GIT_TAG        v1.9.1
+  GIT_TAG        v1.10.2
 )
 set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(cpp-peglib)
@@ -54,7 +54,7 @@ target_link_libraries(loomrv_lib PUBLIC peglib simdjson)
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        v3.4.0
+  GIT_TAG        v3.14.0
 )
 FetchContent_MakeAvailable(Catch2)
 
