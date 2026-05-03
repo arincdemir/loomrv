@@ -2,6 +2,47 @@ cmake_minimum_required(VERSION 3.15)
 project(loomrv VERSION 1.0.0 LANGUAGES CXX)
 
 option(ENABLE_COVERAGE "Enable code coverage" OFF)
+set(LOOMRV_TESTDATA_URL
+    "https://github.com/arincdemir/loomrv/releases/download/timescales-data-v1/data.zip"
+)
+set(LOOMRV_TESTDATA_DIR "${CMAKE_SOURCE_DIR}/data/fullsuite")
+set(LOOMRV_TESTDATA_ARCHIVE "${CMAKE_BINARY_DIR}/loomrv-testdata.zip")
+set(LOOMRV_TESTDATA_SCRIPT "${CMAKE_BINARY_DIR}/download_testdata.cmake")
+
+set(LOOMRV_TESTDATA_SCRIPT_CONTENT [=[
+if(EXISTS "@LOOMRV_TESTDATA_DIR@")
+    message(STATUS "Test data already present at @LOOMRV_TESTDATA_DIR@")
+else()
+    file(MAKE_DIRECTORY "@CMAKE_SOURCE_DIR@/data")
+    message(STATUS "Downloading test data from @LOOMRV_TESTDATA_URL@")
+    file(DOWNLOAD "@LOOMRV_TESTDATA_URL@" "@LOOMRV_TESTDATA_ARCHIVE@" SHOW_PROGRESS STATUS status LOG log)
+    list(GET status 0 code)
+    list(GET status 1 msg)
+    if(NOT code EQUAL 0)
+        message(FATAL_ERROR "Failed to download test data: ${msg}\n${log}")
+    endif()
+
+    execute_process(
+        COMMAND "@CMAKE_COMMAND@" -E tar xvf "@LOOMRV_TESTDATA_ARCHIVE@"
+        WORKING_DIRECTORY "@CMAKE_SOURCE_DIR@"
+        RESULT_VARIABLE res
+    )
+    if(NOT res EQUAL 0)
+        message(FATAL_ERROR "Failed to extract test data from @LOOMRV_TESTDATA_ARCHIVE@")
+    endif()
+
+    file(REMOVE "@LOOMRV_TESTDATA_ARCHIVE@")
+endif()
+]=])
+
+string(CONFIGURE "${LOOMRV_TESTDATA_SCRIPT_CONTENT}" LOOMRV_TESTDATA_SCRIPT_CONTENT @ONLY)
+file(WRITE "${LOOMRV_TESTDATA_SCRIPT}" "${LOOMRV_TESTDATA_SCRIPT_CONTENT}")
+
+add_custom_target(download_testdata
+    COMMAND "${CMAKE_COMMAND}" -P "${LOOMRV_TESTDATA_SCRIPT}"
+    BYPRODUCTS "${LOOMRV_TESTDATA_DIR}"
+    COMMENT "Downloading test data if missing"
+)
 
 if(ENABLE_COVERAGE)
     # Add flags for GCC/Clang

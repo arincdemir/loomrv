@@ -82,6 +82,7 @@ add_executable(unit_tests
 )
 
 target_link_libraries(unit_tests PRIVATE loomrv_lib Catch2::Catch2WithMain simdjson)
+add_dependencies(unit_tests download_testdata)
 
 # Copy Data: Root/data -> build/tests/data
 add_custom_command(TARGET unit_tests POST_BUILD
