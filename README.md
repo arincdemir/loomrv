@@ -178,26 +178,29 @@ one-liner inside the container.  Three formulas are monitored simultaneously
 over the same trace:
 
 ```bash
-docker run --rm loomrv-bench bash -c \
-  'echo "{\"time\":1,\"p\":true,\"q\":false}
-{\"time\":2,\"p\":false,\"q\":true}
-{\"time\":3,\"p\":true,\"q\":true}" | /app/build/loomrv --discrete --print /dev/stdin <(printf "historically({p})\nonce({q})\n{p} since {q}")'
+docker run --rm --entrypoint bash loomrv-bench -c '
+  printf "{\"time\":1,\"p\":true,\"q\":false}\n{\"time\":2,\"p\":true,\"q\":false}\n{\"time\":3,\"p\":false,\"q\":true}\n{\"time\":4,\"p\":true,\"q\":true}\n" > /tmp/trace.jsonl
+  printf "historically({p})\nonce({q})\n{p} since {q}\n" > /tmp/props.txt
+  /app/build/loomrv --discrete --print /tmp/trace.jsonl /tmp/props.txt'
 ```
 
 **Expected output** (three comma-separated verdicts per timestep, one per
 formula):
 
 ```
-1:true,false,false
-2:false,true,false
+2:true,false,false
 3:false,true,true
+4:false,true,true
 ```
 
-| Formula | Meaning | t=1 | t=2 | t=3 |
+The first event (t=1) initialises the monitor state; verdicts are produced from
+t=2 onward.
+
+| Formula | Meaning | t=2 | t=3 | t=4 |
 |---------|---------|-----|-----|-----|
-| `historically({p})` | Has `p` been true at every step so far? | **true** — only step, `p=true` | **false** — `p` was false | **false** — still violated |
-| `once({q})` | Has `q` ever been true? | **false** — `q=false` so far | **true** — `q=true` at t=2 | **true** — already witnessed |
-| `{p} since {q}` | Has `p` held at every step since the last `q`? | **false** — `q` never held | **false** — `p=false` at this step | **true** — `q` held at t=2, `p` holds since |
+| `historically({p})` | Has `p` been true at every step so far? | **true** — `p` true at t=1,2 | **false** — `p` false at t=3 | **false** — still violated |
+| `once({q})` | Has `q` ever been true? | **false** — `q` false so far | **true** — `q` true at t=3 | **true** — already witnessed |
+| `{p} since {q}` | Has `p` held at every step since the last `q`? | **false** — `q` never held | **true** — `q` holds now | **true** — `q` at t=3, `p` since |
 
 LoomRV evaluates all three properties in a single pass over the trace.
 
