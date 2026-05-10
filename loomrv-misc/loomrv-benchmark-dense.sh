@@ -105,7 +105,7 @@ TESTDATA_DIR="${TESTDATA_DIR:-${1:-../data/fullsuite}}"
 hyperfine \
     --warmup 3 \
     --runs 25 \
-    --export-json "${RESULTS_DIR}/$(basename \"$0\" .sh).${commit_hash}.results.json" \
+    --export-json "${RESULTS_DIR}/$(basename "$0" .sh).${commit_hash}.results.json" \
     --command-name "AbsentAQ10 Dense1" \
         "../build/loomrv --dense ${TESTDATA_DIR}/AbsentAQ/Dense1/1M/AbsentAQ10.jsonl prop_files/prop_0.txt" \
     --command-name "AbsentAQ10 Dense10" \

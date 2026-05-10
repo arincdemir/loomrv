@@ -13,7 +13,7 @@ TESTDATA_DIR="${TESTDATA_DIR:-${1:-../data/fullsuite}}"
 hyperfine \
     --warmup 3 \
     --runs 25 \
-    --export-json "${RESULTS_DIR}/$(basename \"$0\" .sh).${commit_hash}.results.json" \
+    --export-json "${RESULTS_DIR}/$(basename "$0" .sh).${commit_hash}.results.json" \
     --command-name AbsentAQ10 \
         "ryjson ${RYJSON_FLAGS} 'historically((once[:10]{q}) -> ((not{p}) since {q}))' ${TESTDATA_DIR}/AbsentAQ/Discrete/1M/AbsentAQ10.jsonl" \
     --command-name AbsentAQ100 \

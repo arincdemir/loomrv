@@ -11,12 +11,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# REELAY_BRANCH controls which branch/tag of doganulus/reelay is used.
+# REELAY_COMMIT controls which commit of doganulus/reelay is used.
 # The apps: Makefile target maps to -DREELAY_BUILD_APPS=ON + cmake --install.
-ARG REELAY_BRANCH=main
+ARG REELAY_COMMIT=2aae575ed8dfa6875528496d316f9579621e41cd
 
-RUN git clone --filter=blob:none --branch "${REELAY_BRANCH}" \
-        https://github.com/doganulus/reelay.git /tmp/reelay
+RUN git clone https://github.com/doganulus/reelay.git /tmp/reelay \
+    && cd /tmp/reelay \
+    && git checkout "${REELAY_COMMIT}"
 
 RUN cmake -S /tmp/reelay -B /tmp/reelay/build \
         -DCMAKE_BUILD_TYPE=Release \
@@ -96,6 +97,12 @@ COPY --from=loomrv-builder /src/build/check-grammar /app/build/check-grammar
 
 # ── benchmark scripts and Python tools ────────────────────────
 COPY loomrv-misc/ /app/loomrv-misc/
+
+# ── pre-computed benchmark results ────────────────────────────
+# Included so reviewers can verify paper tables without re-running benchmarks.
+# Usage: python3 tools/generate_tables.py --dense-dir results/2026-05-01_23-08-06 \
+#            --discrete-dir results/2026-05-02_00-58-23
+COPY results/ /app/loomrv-misc/results/
 
 # ── test data ──────────────────────────────────────────────────
 # Downloaded from the GitHub release so the image is self-contained.

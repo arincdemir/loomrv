@@ -39,6 +39,6 @@ RYJSON_FLAGS=${RYJSON_FLAGS:-"-v"}
 hyperfine \
     --warmup 3 \
     --runs 25 \
-    --export-json "${RESULTS_DIR}/$(basename \"$0\" .sh).${commit_hash}.results.json" \
+    --export-json "${RESULTS_DIR}/$(basename "$0" .sh).${commit_hash}.results.json" \
     --command-name "ryjson_Combined_AND_30" \
         "./run_ryjson_single.sh \"${RYJSON_FLAGS}\" \"${TEST_TRACE}\" \"${PROPS_FILE}\""
