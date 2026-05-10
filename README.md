@@ -83,8 +83,8 @@ docker --version   # Should print Docker version 20.10 or newer
 
 ## 1 — Build the Image
 
-Run the following from the repository root.  Pass in the current commit hash so
-result filenames reflect the exact revision being benchmarked:
+> [!IMPORTANT]
+> **Run all commands from the artfiact root** (`loomrv/`).
 
 ```bash
 docker build \
@@ -111,15 +111,8 @@ Create a local `results/` directory so Docker can write results to the host:
 mkdir -p results
 ```
 
-### All benchmarks (dense + discrete)
 
-```bash
-docker run --rm \
-  -v "$(pwd)/results:/app/loomrv-misc/results" \
-  loomrv-bench all
-```
-
-### Dense benchmarks only
+### Dense benchmarks
 
 ```bash
 docker run --rm \
@@ -127,7 +120,7 @@ docker run --rm \
   loomrv-bench dense
 ```
 
-### Discrete benchmarks only
+### Discrete benchmarks
 
 ```bash
 docker run --rm \
@@ -216,15 +209,6 @@ docker run --rm --entrypoint bash loomrv-bench -c \
   'python3 tools/generate_tables.py \
       --dense-dir    results/2026-05-01_23-08-06 \
       --discrete-dir results/2026-05-02_00-58-23'
-```
-
-Or, if you have the results on the host:
-
-```bash
-cd loomrv-misc
-python3 tools/generate_tables.py \
-    --dense-dir    ../results/2026-05-01_23-08-06 \
-    --discrete-dir ../results/2026-05-02_00-58-23
 ```
 
 This prints all benchmark tables (Tables 2–7 from the paper) with minimum
