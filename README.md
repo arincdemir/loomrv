@@ -1,4 +1,3 @@
-[![codecov](https://codecov.io/github/arincdemir/loomrv/graph/badge.svg?token=ARQ99KRISB)](https://codecov.io/github/arincdemir/loomrv)
 
 # LoomRV — Multi-Property Temporal Logic Monitoring
 
@@ -174,26 +173,33 @@ with `1`, without modifying any benchmark script.
 
 ## 5 — Quick Example
 
-To verify the tool works, run a simple one-liner inside the container:
+To verify the tool works and see multi-property monitoring in action, run a
+one-liner inside the container.  Three formulas are monitored simultaneously
+over the same trace:
 
 ```bash
 docker run --rm loomrv-bench bash -c \
   'echo "{\"time\":1,\"p\":true,\"q\":false}
 {\"time\":2,\"p\":false,\"q\":true}
-{\"time\":3,\"p\":true,\"q\":true}" | /app/build/loomrv --discrete "historically({p})"'
+{\"time\":3,\"p\":true,\"q\":true}" | /app/build/loomrv --discrete --print /dev/stdin <(printf "historically({p})\nonce({q})\n{p} since {q}")'
 ```
 
-**Expected output** (one verdict per timestep):
+**Expected output** (three comma-separated verdicts per timestep, one per
+formula):
 
 ```
-1:true
-2:false
-3:false
+1:true,false,false
+2:false,true,false
+3:false,true,true
 ```
 
-The formula `historically({p})` ("has `p` been true at all times so far?") is
-true at time 1 (only timestep), becomes false at time 2 (since `p=false`), and
-stays false at time 3.
+| Formula | Meaning | t=1 | t=2 | t=3 |
+|---------|---------|-----|-----|-----|
+| `historically({p})` | Has `p` been true at every step so far? | **true** — only step, `p=true` | **false** — `p` was false | **false** — still violated |
+| `once({q})` | Has `q` ever been true? | **false** — `q=false` so far | **true** — `q=true` at t=2 | **true** — already witnessed |
+| `{p} since {q}` | Has `p` held at every step since the last `q`? | **false** — `q` never held | **false** — `p=false` at this step | **true** — `q` held at t=2, `p` holds since |
+
+LoomRV evaluates all three properties in a single pass over the trace.
 
 ---
 
@@ -203,10 +209,10 @@ The `results/` directory contains the raw hyperfine JSON logs from the
 experiments reported in the paper.  To reproduce the paper's tables:
 
 ```bash
-docker run --rm loomrv-bench bash -c \
+docker run --rm --entrypoint bash loomrv-bench -c \
   'python3 tools/generate_tables.py \
-      --dense-dir    /app/loomrv-misc/results/2026-05-01_23-08-06 \
-      --discrete-dir /app/loomrv-misc/results/2026-05-02_00-58-23'
+      --dense-dir    results/2026-05-01_23-08-06 \
+      --discrete-dir results/2026-05-02_00-58-23'
 ```
 
 Or, if you have the results on the host:
@@ -238,7 +244,7 @@ wall-clock times and computed speedup ratios.
 ## 7 — Interactive Exploration
 
 ```bash
-docker run --rm -it loomrv-bench bash
+docker run --rm -it --entrypoint bash loomrv-bench
 ```
 
 Inside the container, the working directory is `/app/loomrv-misc/`.
@@ -267,39 +273,6 @@ results/<timestamp>/<script-name>.<commit-hash>.results.json
 The JSON is in [hyperfine's export format](https://github.com/sharkdp/hyperfine#export-results),
 containing per-command timing statistics (mean, median, standard deviation, min,
 max, and individual run times).
-
----
-
-## 9 — Notes
-
-- **Reproducibility**: The test data is pinned to the
-  [`timescales-data-v1`](https://github.com/arincdemir/loomrv/releases/tag/timescales-data-v1)
-  release. The Reelay competitor tools are built from commit
-  [`2aae575`](https://github.com/doganulus/reelay/commit/2aae575ed8dfa6875528496d316f9579621e41cd);
-  use `--build-arg REELAY_BRANCH=<tag>` to override.
-- **CPU performance**: For publication-quality results, disable CPU frequency
-  scaling on the host (see `loomrv-misc/benchmark_settings.txt`).  The Docker
-  container uses the host CPU directly, so host-level tuning applies.
-- **Platform**: The image is built for the host architecture.  Cross-platform
-  builds are possible with `--platform` but timing results will not be
-  comparable across architectures.
-
----
-
-## 10 — Obtaining a DOI (for camera-ready)
-
-To archive the artifact and obtain a DOI:
-
-1. Go to [zenodo.org](https://zenodo.org) and log in (GitHub login works)
-2. Click **New Upload** → select **Software** as the upload type
-3. Upload the `.zip` artifact package
-4. Fill in metadata:
-   - **Title**: "LoomRV: Multi-Property Temporal Logic Monitoring — Artifact"
-   - **Authors**: same as the paper
-   - **License**: MPL-2.0
-   - **Related identifiers**: add the paper's DOI as "is supplement to"
-5. **Publish** → Zenodo assigns a DOI
-6. Add the DOI to the camera-ready EasyChair submission
 
 ---
 

@@ -1,7 +1,7 @@
 # ================================================================
 # Stage 1 — Build reelay apps (rybinx + ryjson)
 # ================================================================
-FROM ubuntu:24.04.1 AS reelay-builder
+FROM ubuntu:24.04 AS reelay-builder
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         cmake \
@@ -11,12 +11,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# REELAY_BRANCH controls which branch/tag of doganulus/reelay is used.
+# REELAY_COMMIT controls which commit of doganulus/reelay is used.
 # The apps: Makefile target maps to -DREELAY_BUILD_APPS=ON + cmake --install.
-ARG REELAY_BRANCH=2aae575ed8dfa6875528496d316f9579621e41cd
+ARG REELAY_COMMIT=2aae575ed8dfa6875528496d316f9579621e41cd
 
-RUN git clone --filter=blob:none --branch "${REELAY_BRANCH}" \
-        https://github.com/doganulus/reelay.git /tmp/reelay
+RUN git clone https://github.com/doganulus/reelay.git /tmp/reelay \
+    && cd /tmp/reelay \
+    && git checkout "${REELAY_COMMIT}"
 
 RUN cmake -S /tmp/reelay -B /tmp/reelay/build \
         -DCMAKE_BUILD_TYPE=Release \
@@ -30,7 +31,7 @@ RUN cmake -S /tmp/reelay -B /tmp/reelay/build \
 # ================================================================
 # Stage 2 — Build loomrv (only the binaries needed by benchmarks)
 # ================================================================
-FROM ubuntu:24.04.1 AS loomrv-builder
+FROM ubuntu:24.04 AS loomrv-builder
 
 # build-essential provides g++ (GCC 13 on 24.04, full C++20 support).
 # libboost-dev is required so that benchmarks/CMakeLists.txt can satisfy
@@ -69,7 +70,7 @@ RUN cmake -S . -B build \
 # ================================================================
 # Stage 3 — Runtime image
 # ================================================================
-FROM ubuntu:24.04.1 AS runtime
+FROM ubuntu:24.04 AS runtime
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         hyperfine \
