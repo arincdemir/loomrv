@@ -34,6 +34,7 @@ struct ptl_parser : ptl_grammar{
   std::map<std::string, unsigned int, std::less<>> proposition_map;
   std::unordered_map<NodeKey, int, NodeKeyHash> node_dedup_map;
   std::string last_error;
+  int dedup_hits = 0;
 
   int add_or_find_node(ParsedNode node) {
     if (node.type == NodeType::AND || node.type == NodeType::OR) {
@@ -44,6 +45,7 @@ struct ptl_parser : ptl_grammar{
     NodeKey key{node.type, node.leftOperandIndex, node.rightOperandIndex, node.a, node.b};
     auto it = node_dedup_map.find(key);
     if (it != node_dedup_map.end()) {
+      dedup_hits++;
       return it->second;
     }
     result_nodes.push_back(node);
@@ -241,6 +243,7 @@ struct ptl_parser : ptl_grammar{
     proposition_map.clear();
     node_dedup_map.clear();
     last_error.clear();
+    dedup_hits = 0;
     bool ok = parser.parse(pattern.c_str());
     if (!ok) {
       throw std::runtime_error("Failed to parse pattern: " + pattern + (last_error.empty() ? "" : " (" + last_error + ")"));

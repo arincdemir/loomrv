@@ -132,6 +132,11 @@ add_executable(count-nodes
 )
 target_link_libraries(count-nodes PRIVATE loomrv_lib)
 
+add_executable(verify-dedup
+    src/verify_dedup.cpp
+)
+target_link_libraries(verify-dedup PRIVATE loomrv_lib)
+
 add_executable(test-json src/json_read_main.cpp)
 target_link_libraries(test-json PRIVATE simdjson)
 
