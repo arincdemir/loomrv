@@ -128,7 +128,7 @@ D="${TESTDATA_DIR}"
 hyperfine \
     --warmup 3 \
     --runs 25 \
-    --export-json "${RESULTS_DIR}/$(basename \"$0\" .sh).${commit_hash}.results.json" \
+    --export-json "${RESULTS_DIR}/$(basename "$0" .sh).${commit_hash}.results.json" \
     --command-name "AbsentAQ10"     "${B} --discrete ${D}/AbsentAQ/Discrete/1M/AbsentAQ10.jsonl     ${F}/AbsentAQ10.txt" \
     --command-name "AbsentAQ100"    "${B} --discrete ${D}/AbsentAQ/Discrete/1M/AbsentAQ100.jsonl    ${F}/AbsentAQ100.txt" \
     --command-name "AbsentAQ1000"   "${B} --discrete ${D}/AbsentAQ/Discrete/1M/AbsentAQ1000.jsonl   ${F}/AbsentAQ1000.txt" \

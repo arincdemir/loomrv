@@ -53,6 +53,6 @@ RYBINX_FLAGS=${RYBINX_FLAGS:-"-v"}
 hyperfine \
     --warmup 3 \
     --runs 25 \
-    --export-json "${RESULTS_DIR}/$(basename \"$0\" .sh).${commit_hash}.results.json" \
+    --export-json "${RESULTS_DIR}/$(basename "$0" .sh).${commit_hash}.results.json" \
     --command-name "rybinx_Combined_AND_30" \
         "./run_rybinx_single.sh \"${RYBINX_FLAGS}\" \"${BIN_TRACE}\" \"${PROPS_FILE}\""

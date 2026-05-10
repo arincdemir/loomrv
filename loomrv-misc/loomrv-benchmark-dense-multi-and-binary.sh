@@ -53,6 +53,6 @@ fi
 hyperfine \
     --warmup 3 \
     --runs 25 \
-    --export-json "${RESULTS_DIR}/$(basename \"$0\" .sh).${commit_hash}.results.json" \
+    --export-json "${RESULTS_DIR}/$(basename "$0" .sh).${commit_hash}.results.json" \
     --command-name "Combined_MultiProperty_AND_30_binary" \
         "${BIN_PATH} --binary --dense ${BIN_TRACE} ${PROPS_FILE}"

@@ -90,7 +90,7 @@ chmod +x "${WRAPPER_SCRIPT}"
 hyperfine \
     --warmup 3 \
     --runs 25 \
-    --export-json "${RESULTS_DIR}/$(basename \"$0\" .sh).${commit_hash}.results.json" \
+    --export-json "${RESULTS_DIR}/$(basename "$0" .sh).${commit_hash}.results.json" \
     --command-name "loomrv_Sequential_30" \
         "./${WRAPPER_SCRIPT} \"${TEST_TRACE}\" \"${PROPS_FILE}\" \"${BIN_PATH}\""
 
