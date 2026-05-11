@@ -210,6 +210,31 @@ docker run --rm --entrypoint bash loomrv-bench -c \
 This prints all benchmark tables (Tables 2–7 from the paper) with minimum
 wall-clock times and computed speedup ratios.
 
+### Generating Tables from Your Own Results
+
+After running the benchmarks (§2), the result JSONs are written to
+`results/<timestamp>/` on the host.  You can generate tables directly on the
+host machine — no Docker required (only Python 3 with the standard library):
+
+```bash
+python3 loomrv-misc/tools/generate_tables.py \
+    --dense-dir    results/<dense-timestamp> \
+    --discrete-dir results/<discrete-timestamp>
+```
+
+For example, if you ran `dense` first and `discrete` second:
+
+```bash
+ls results/
+# 2026-05-11_14-30-00   2026-05-11_15-10-00
+
+python3 loomrv-misc/tools/generate_tables.py \
+    --dense-dir    results/2026-05-11_14-30-00 \
+    --discrete-dir results/2026-05-11_15-10-00
+```
+
+You can also pass only one of the two flags if you ran only one suite.
+
 ### Mapping: Result Files → Paper Tables
 
 | Paper Table | Description | Result Files |

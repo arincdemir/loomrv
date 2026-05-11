@@ -36,12 +36,49 @@ def load_results(directory):
 
 
 def find_file(data, prefix):
-    """Return the parsed JSON for the first file whose name starts with *prefix*."""
+    """Return the parsed JSON for the first file whose name starts with *prefix*.
+
+    Handles two filename conventions:
+      - Original results  : ``script.sh".COMMIT.results.json``  (stray quote)
+      - Docker-generated  : ``script.COMMIT.results.json``      (`basename` strips .sh)
+
+    The function tries matching with the literal prefix first, then falls back
+    to a version with ``.sh`` stripped so both conventions are supported.
+    When using the stripped prefix, we additionally verify the next character
+    is ``"`` or ``.`` to avoid false positives (e.g. ``foo-bar`` matching
+    ``foo-bar-extra``).
+    """
+
+    def _matches(name, pfx, exact):
+        """Check if *name* starts with *pfx*.
+
+        When *exact* is False (i.e. we stripped ``.sh`` from the prefix),
+        require the character immediately after the prefix to be a boundary
+        character (``.`` or ``"`` or end-of-string) so that ``foo-bar`` does
+        not match ``foo-bar-extra``.
+        """
+        if not name.startswith(pfx):
+            return False
+        if exact:
+            return True
+        # Check boundary: next char must be '.', '"', or end of string
+        rest = name[len(pfx):]
+        return not rest or rest[0] in ('.', '"')
+
     for fname, content in data.items():
-        # Strip escaped quotes from filenames for matching
+        # Strip escaped quotes from filenames for matching (original results)
         clean = fname.replace('"', "")
-        if clean.startswith(prefix) or fname.startswith(prefix):
+
+        # Try exact prefix first
+        if _matches(fname, prefix, exact=True) or _matches(clean, prefix, exact=True):
             return content
+
+        # Try with .sh stripped
+        if prefix.endswith(".sh"):
+            stripped = prefix[:-3]
+            if _matches(fname, stripped, exact=False) or _matches(clean, stripped, exact=False):
+                return content
+
     return None
 
 
