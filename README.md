@@ -1,4 +1,3 @@
-
 # LoomRV — Multi-Property Temporal Logic Monitoring
 
 LoomRV is a high-performance runtime verification framework for the simultaneous
@@ -87,10 +86,7 @@ docker --version   # Should print Docker version 20.10 or newer
 > **Run all commands from the artfiact root** (`loomrv/`).
 
 ```bash
-docker build \
-  --build-arg GIT_COMMIT=$(git rev-parse HEAD) \
-  -t loomrv-bench \
-  .
+docker build -t loomrv-bench .
 ```
 
 What happens during the build:

@@ -153,10 +153,12 @@ COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # ── environment ────────────────────────────────────────────────
-# GIT_COMMIT is baked in at build time via --build-arg.
+# GIT_COMMIT is hardcoded to the artifact's commit hash.  It can be overridden
+# at build time via --build-arg GIT_COMMIT=... if desired.
 # The entrypoint creates a git shim that returns this value for
 # `git rev-parse HEAD` calls — used by benchmark scripts to name result files.
-ARG  GIT_COMMIT=unknown
+# TODO change this if commit changes.
+ARG  GIT_COMMIT=52c7b2f  
 ENV  GIT_COMMIT=${GIT_COMMIT}
 
 # Default data path expected by benchmark scripts (../data/fullsuite relative
