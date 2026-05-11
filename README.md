@@ -83,7 +83,7 @@ docker --version   # Should print Docker version 20.10 or newer
 ## 1 — Build the Image
 
 > [!IMPORTANT]
-> **Run all commands from the artfiact root** (`loomrv/`).
+> **Run all commands from the artfiact root** (`loomrv-artifact/`).
 
 ```bash
 docker build -t loomrv-bench .
