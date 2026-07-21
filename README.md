@@ -50,9 +50,6 @@ loomrv/
 ├── results/                        Pre-computed benchmark results
 │   ├── 2026-05-01_23-08-06/        Dense-time results (hyperfine JSON)
 │   └── 2026-05-02_00-58-23/        Discrete-time results (hyperfine JSON)
-│
-└── multi-property-temporal-logic-monitoring-latex/
-    └── main.tex                    Paper source
 ```
 
 ---
