@@ -61,6 +61,28 @@ Run a CLI trace and inspect verdicts:
 ./build/loomrv --discrete --print examples/trace.jsonl examples/properties.txt
 ```
 
+## Documentation Validation
+
+The pages under `docs/wiki` are authoritative. Validate their internal links, documented CLI flags, required command examples, bundled output, and built utility behavior with:
+
+```bash
+python3 docs/wiki_tool.py validate --build-dir build
+```
+
+Check whether a local GitHub Wiki checkout is synchronized without writing:
+
+```bash
+python3 docs/wiki_tool.py sync --check --destination loomrv.wiki
+```
+
+After reviewing canonical documentation changes, update only the known wiki pages with:
+
+```bash
+python3 docs/wiki_tool.py sync --write --destination loomrv.wiki
+```
+
+The publisher converts repository links such as `Getting-Started.md` to GitHub Wiki links such as `Getting-Started`. It refuses to proceed when the destination contains unexpected Markdown pages, and it never deletes live-only content.
+
 ## Coverage
 
 Configure coverage instrumentation with:

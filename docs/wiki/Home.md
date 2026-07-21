@@ -8,7 +8,7 @@ Instead of constructing and running one independent monitor per property, LoomRV
 
 **Documentation release:** 2026.07, validated against the `main` branch on July 21, 2026.
 
-A snapshot is stored under `docs/wiki` in the source repository so that releases and archival artifacts retain the documentation applicable to their exact source revision. The GitHub wiki remains the living copy for ongoing updates.
+The source of truth is stored under `docs/wiki` so releases and archival artifacts retain the documentation applicable to their exact source revision. The public GitHub Wiki is generated from this versioned source with GitHub-compatible internal links.
 
 ## Why LoomRV?
 
@@ -86,7 +86,10 @@ See [Benchmarks and Results](Benchmarks-and-Results.md) for the methodology and 
 - [Input and Output Formats](Input-and-Output-Formats.md)
 - [Library API](Library-API.md)
 - [Testing and Validation](Testing-and-Validation.md)
+- [Performance Guide](Performance-Guide.md)
 - [Benchmarks and Results](Benchmarks-and-Results.md)
+- [Tool Compatibility and Baseline Choice](Tool-Compatibility.md)
+- [FAQ and Design Rationale](FAQ-and-Design-Rationale.md)
 - [Project Structure and Utilities](Project-Structure-and-Utilities.md)
 - [References and Credits](References-and-Credits.md)
 

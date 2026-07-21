@@ -12,7 +12,7 @@
 | `loomrv-misc` | Benchmark scripts and Python tools |
 | `results` | Bundled raw Hyperfine results |
 | `data/fullsuite` | Timescales benchmark traces |
-| `docs/wiki` | Versioned snapshot of the project documentation |
+| `docs/wiki` | Authoritative, versioned project documentation |
 | `Dockerfile` | Reproducible benchmark image |
 
 ## Main Components
@@ -51,6 +51,8 @@ The `loomrv-misc` directory includes:
 | `tools/generate_traces.py` | Generate synthetic traces |
 | `tools/to_binary_row.py` | Convert traces to the binary row format |
 | `tools/extract_min_times.py` | Extract minimum timings |
+
+Documentation is authored in `docs/wiki`. The `docs/wiki_tool.py` command validates the manual and synchronizes known pages to a local `loomrv.wiki` checkout while adapting internal link syntax.
 
 ## Dependencies
 

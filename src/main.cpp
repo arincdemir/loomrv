@@ -22,6 +22,7 @@ enum RYBINX_OPTS : uint8_t {
   OPT_BINARY = 'b',
   OPT_PRINT = 'p',
   OPT_ARENA_CAPACITY = 'a',
+  OPT_VERSION = 'V',
 };
 
 struct arguments {
@@ -37,17 +38,18 @@ struct arguments {
 static void print_usage(const char *prog) {
   std::fprintf(stderr,
                "Usage: %s [OPTION...] TRACE_FILE PROPERTIES_FILE\n"
-               "LoomRV (Reelay) CLI Tool -- loomrv 0.2.0\n\n"
+               "LoomRV (Reelay) CLI Tool -- loomrv %s\n\n"
                "  -v, --dense      Use dense time model (default)\n"
                "  -x, --discrete   Use discrete time model\n"
                "  -b, --binary     Read trace from binary .row.bin format "
                "instead of NDJSON\n"
                "  -p, --print      Print per-timestep verdicts to stdout\n"
+               "      --version    Print version information and exit\n"
                "  -a, --arena-capacity N\n"
                "                   Set each interval arena buffer's capacity "
                "(default: 3000)\n"
                "\nReport bugs to: Arinc Demir <github.com/arincdemir>\n",
-               prog);
+               prog, LOOMRV_VERSION);
 }
 
 static bool parse_arena_capacity(const char *text, unsigned int &capacity) {
@@ -79,6 +81,7 @@ int main(int argc, char **argv) {
       {"discrete", no_argument, nullptr, OPT_DISCRETE},
       {"binary", no_argument, nullptr, OPT_BINARY},
       {"print", no_argument, nullptr, OPT_PRINT},
+      {"version", no_argument, nullptr, OPT_VERSION},
       {"arena-capacity", required_argument, nullptr, OPT_ARENA_CAPACITY},
       {nullptr, 0, nullptr, 0}};
 
@@ -99,6 +102,9 @@ int main(int argc, char **argv) {
     case OPT_PRINT:
       args.print = true;
       break;
+    case OPT_VERSION:
+      std::cout << "loomrv " << LOOMRV_VERSION << '\n';
+      return 0;
     case OPT_ARENA_CAPACITY:
       if (!parse_arena_capacity(optarg, args.arena_capacity)) {
         std::cerr << "Error: arena capacity must be a positive integer within "

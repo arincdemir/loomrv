@@ -12,6 +12,8 @@ The repository contains scripts, raw Hyperfine JSON output, and a table generato
 
 LoomRV and Reelay are evaluated with both JSON and binary feeders.
 
+See [Tool Compatibility and Baseline Choice](Tool-Compatibility.md) for why Reelay is the direct executable baseline and how adjacent monitoring tools differ in scope.
+
 ## Bundled Result Sets
 
 | Directory | Contents |
@@ -117,3 +119,5 @@ The configurations separate several major effects:
 Discrete monitoring benefits strongly from avoiding repeated parsing and initialization. Dense monitoring also benefits from structural sharing because each node performs more expensive interval-set operations.
 
 These are end-to-end measurements rather than a complete component-level decomposition. In particular, the multi-property configurations also benefit from parsing and feeding the trace once, and the current experiments do not independently measure every contribution of parsing, scheduling, structural sharing, and arena management.
+
+See the [Performance Guide](Performance-Guide.md) before comparing a new run or property collection with these results.

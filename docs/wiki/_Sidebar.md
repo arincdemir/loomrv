@@ -8,7 +8,10 @@
 - [Input and Output Formats](Input-and-Output-Formats.md)
 - [Library API](Library-API.md)
 - [Testing and Validation](Testing-and-Validation.md)
+- [Performance Guide](Performance-Guide.md)
 - [Benchmarks and Results](Benchmarks-and-Results.md)
+- [Tool Compatibility](Tool-Compatibility.md)
+- [FAQ and Design Rationale](FAQ-and-Design-Rationale.md)
 - [Project Structure and Utilities](Project-Structure-and-Utilities.md)
 - [References and Credits](References-and-Credits.md)
 

@@ -21,6 +21,8 @@ The primary comparison baseline is [Reelay](https://github.com/doganulus/reelay)
 
 LoomRV's Docker image builds a pinned Reelay revision to keep benchmark comparisons reproducible.
 
+The [Tool Compatibility and Baseline Choice](Tool-Compatibility.md) page relates Reelay to MonPoly, Aerial, Copilot, and R2U2 using links to each project's primary documentation.
+
 ## Supporting Tools
 
 - [simdjson](https://github.com/simdjson/simdjson) for high-performance JSON parsing

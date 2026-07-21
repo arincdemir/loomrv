@@ -108,3 +108,5 @@ It automatically finalizes the monitor using that order.
 | `IntervalSetHolder` | Owns double-buffered interval storage |
 
 See [Library API](Library-API.md) for embedding details.
+
+For discussion of conjunctions, automata, and exact-bound sharing, see [FAQ and Design Rationale](FAQ-and-Design-Rationale.md).

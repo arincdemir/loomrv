@@ -62,6 +62,13 @@ cmake --build build -j
 
 The build also downloads the test dataset if `data/fullsuite` is absent.
 
+Confirm the version compiled from the CMake project metadata:
+
+```bash
+./build/loomrv --version
+# loomrv 1.0.0
+```
+
 Run the same quick example natively:
 
 ```bash
@@ -115,6 +122,7 @@ loomrv [OPTION...] TRACE_FILE PROPERTIES_FILE
 | `-x`, `--discrete` | Use discrete time |
 | `-b`, `--binary` | Read the project-specific `.row.bin` format instead of NDJSON |
 | `-p`, `--print` | Print per-timestep or per-interval verdicts |
+| `--version` | Print the CMake project version and exit |
 | `-a N`, `--arena-capacity N` | Set each interval arena buffer's capacity; default `3000` |
 
 Examples:
@@ -137,11 +145,12 @@ the CLI does not automatically resize the preallocated arena.
 ```bash
 ./build/check-grammar "once[:10]({p})"
 ./build/count-nodes properties.txt
+./build/count-nodes --json properties.txt
 ./build/verify-dedup properties.txt
 ```
 
 - `check-grammar` validates one formula.
-- `count-nodes` compares independent node counts with the shared multi-property graph.
+- `count-nodes` compares independent node counts with the shared multi-property graph; `--json` emits the same analysis as a stable machine-readable report.
 - `verify-dedup` reports deduplication within each individual formula.
 
 ## Next Steps
@@ -149,6 +158,8 @@ the CLI does not automatically resize the preallocated arena.
 - Review [Temporal Logic Syntax](Temporal-Logic-Syntax.md).
 - Learn trace schemas in [Input and Output Formats](Input-and-Output-Formats.md).
 - Embed the engine using the [Library API](Library-API.md).
+- Apply the recommendations in the [Performance Guide](Performance-Guide.md).
+- Review common questions in [FAQ and Design Rationale](FAQ-and-Design-Rationale.md).
 - Reproduce measurements from [Benchmarks and Results](Benchmarks-and-Results.md).
 
 ## Troubleshooting

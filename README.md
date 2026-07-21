@@ -9,10 +9,10 @@ management.  This is the artifact accompanying the paper
 
 ## Documentation
 
-The complete LoomRV user and developer manual is available in the
-[GitHub Wiki](https://github.com/arincdemir/loomrv/wiki). A versioned snapshot
-is also bundled with the source under [`docs/wiki`](docs/wiki/Home.md) so that
-each repository revision retains the documentation that applies to it.
+The complete LoomRV user and developer manual is versioned under
+[`docs/wiki`](docs/wiki/Home.md), which is the documentation source of truth.
+The [GitHub Wiki](https://github.com/arincdemir/loomrv/wiki) is generated from
+that snapshot for browsing.
 
 The object-oriented baseline implementation by @doganulus can be seen at
 [reelay](https://github.com/doganulus/reelay).
