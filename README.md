@@ -26,6 +26,7 @@ loomrv/
 ├── LICENSE                         MPL 2.0
 ├── README.md                       This file
 ├── docs/wiki/                      Versioned project documentation snapshot
+├── examples/                       Small trace, property, and expected-output files
 ├── Dockerfile                      Multi-stage build for the benchmarking container
 ├── docker-entrypoint.sh            Container entrypoint (dispatches benchmark suites)
 │
@@ -174,15 +175,13 @@ with `1`, without modifying any benchmark script.
 
 ## 5 — Quick Example
 
-To verify the tool works and see multi-property monitoring in action, run a
-one-liner inside the container.  Three formulas are monitored simultaneously
-over the same trace:
+To verify the tool works and see multi-property monitoring in action, run the
+versioned example files included in the image. Three formulas are monitored
+simultaneously over the same trace:
 
 ```bash
-docker run --rm --entrypoint bash loomrv-bench -c '
-  printf "{\"time\":1,\"p\":true,\"q\":false}\n{\"time\":2,\"p\":true,\"q\":false}\n{\"time\":3,\"p\":false,\"q\":true}\n{\"time\":4,\"p\":true,\"q\":true}\n" > /tmp/trace.jsonl
-  printf "historically({p})\nonce({q})\n{p} since {q}\n" > /tmp/props.txt
-  /app/build/loomrv --discrete --print /tmp/trace.jsonl /tmp/props.txt'
+docker run --rm --entrypoint /app/build/loomrv loomrv-bench \
+  --discrete --print /app/examples/trace.jsonl /app/examples/properties.txt
 ```
 
 **Expected output** (three comma-separated verdicts per timestep, one per
@@ -204,6 +203,9 @@ t=2 onward.
 | `{p} since {q}` | Has `p` held at every step since the last `q`? | **false** — `q` never held | **true** — `q` holds now | **true** — `q` at t=3, `p` since |
 
 LoomRV evaluates all three properties in a single pass over the trace.
+The same inputs and expected output are available under `examples/` for native
+runs. The CLI allocates `3000` entries per interval arena buffer by default;
+use `-a N` or `--arena-capacity N` to select a different positive capacity.
 
 ---
 
@@ -219,8 +221,8 @@ docker run --rm --entrypoint bash loomrv-bench -c \
       --discrete-dir results/2026-05-02_00-58-23'
 ```
 
-This prints all benchmark tables (Tables 2–7 from the paper) with minimum
-wall-clock times and computed speedup ratios.
+This prints the generated benchmark tables (Tables II–VIII from the paper)
+with minimum wall-clock times and computed speedup ratios.
 
 ### Generating Tables from Your Own Results
 
@@ -251,13 +253,13 @@ You can also pass only one of the two flags if you ran only one suite.
 
 | Paper Table | Description | Result Files |
 |---|---|---|
-| Table 2 | CSE sensitivity (discrete) | `bench_discrete_*.json`, `bench_binary_discrete_*.json` |
-| Table 3 | CSE sensitivity (dense) | `bench_*.json`, `bench_binary_*.json` (in dense dir) |
-| Table 4 | Single-property (discrete) | `loomrv-discrete-benchmark-json.sh.*`, `ryjson-discrete-benchmark.sh.*`, `loomrv-discrete-benchmark-bin.sh.*`, `rybinx-discrete-benchmark.sh.*` |
-| Table 5 | Single-property dense (JSON) | `loomrv-benchmark-dense.sh.*`, `ryjson-benchmark-dense.sh.*` |
-| Table 5b | Single-property dense (binary) | `loomrv-benchmark-dense-binary.sh.*`, `rybinx-benchmark-dense.sh.*` |
-| Table 6 | Multi-property (discrete) | `*-discrete-benchmark-multi*.sh.*`, `*-discrete-benchmark-single*.sh.*` |
-| Table 7 | Multi-property (dense) | `*-benchmark-dense-multi*.sh.*`, `*-benchmark-dense-single*.sh.*` |
+| Table II | CSE sensitivity (discrete) | `bench_discrete_*.json`, `bench_binary_discrete_*.json` |
+| Table III | CSE sensitivity (dense) | `bench_*.json`, `bench_binary_*.json` (in dense dir) |
+| Table IV | Single-property (discrete) | `loomrv-discrete-benchmark-json.sh.*`, `ryjson-discrete-benchmark.sh.*`, `loomrv-discrete-benchmark-bin.sh.*`, `rybinx-discrete-benchmark.sh.*` |
+| Table V | Single-property dense (JSON) | `loomrv-benchmark-dense.sh.*`, `ryjson-benchmark-dense.sh.*` |
+| Table VI | Single-property dense (binary) | `loomrv-benchmark-dense-binary.sh.*`, `rybinx-benchmark-dense.sh.*` |
+| Table VII | Multi-property (discrete) | `*-discrete-benchmark-multi*.sh.*`, `*-discrete-benchmark-single*.sh.*` |
+| Table VIII | Multi-property (dense) | `*-benchmark-dense-multi*.sh.*`, `*-benchmark-dense-single*.sh.*` |
 
 ---
 
@@ -277,6 +279,7 @@ Relevant paths:
 | `/app/build/check-grammar` | Formula grammar checker |
 | `/usr/local/bin/rybinx` | Reelay binary-format monitor |
 | `/usr/local/bin/ryjson` | Reelay JSON-format monitor |
+| `/app/examples/` | Reusable trace, properties, and expected output |
 | `/app/data/fullsuite/` | Pre-generated test data (10 pattern families) |
 | `/app/loomrv-misc/tools/` | Python helper scripts |
 

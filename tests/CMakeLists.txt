@@ -93,3 +93,4 @@ add_custom_command(TARGET unit_tests POST_BUILD
 
 include(CTest)
 include(Catch)
+catch_discover_tests(unit_tests)

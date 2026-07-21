@@ -1,3 +1,4 @@
+#include <charconv>
 #include <cstdlib>
 #include <fstream>
 #include <getopt.h>
@@ -20,6 +21,7 @@ enum RYBINX_OPTS : uint8_t {
   OPT_DISCRETE = 'x',
   OPT_BINARY = 'b',
   OPT_PRINT = 'p',
+  OPT_ARENA_CAPACITY = 'a',
 };
 
 struct arguments {
@@ -29,6 +31,7 @@ struct arguments {
   bool discrete = false;
   bool binary = false;
   bool print = false;
+  unsigned int arena_capacity = 3000;
 };
 
 static void print_usage(const char *prog) {
@@ -40,8 +43,27 @@ static void print_usage(const char *prog) {
                "  -b, --binary     Read trace from binary .row.bin format "
                "instead of NDJSON\n"
                "  -p, --print      Print per-timestep verdicts to stdout\n"
+               "  -a, --arena-capacity N\n"
+               "                   Set each interval arena buffer's capacity "
+               "(default: 3000)\n"
                "\nReport bugs to: Arinc Demir <github.com/arincdemir>\n",
                prog);
+}
+
+static bool parse_arena_capacity(const char *text, unsigned int &capacity) {
+  if (text == nullptr || *text == '\0') {
+    return false;
+  }
+
+  unsigned int value = 0;
+  const char *end = text + std::char_traits<char>::length(text);
+  const auto result = std::from_chars(text, end, value);
+  if (result.ec != std::errc{} || result.ptr != end || value == 0) {
+    return false;
+  }
+
+  capacity = value;
+  return true;
 }
 
 void discrete_case(const arguments &args);
@@ -57,10 +79,13 @@ int main(int argc, char **argv) {
       {"discrete", no_argument, nullptr, OPT_DISCRETE},
       {"binary", no_argument, nullptr, OPT_BINARY},
       {"print", no_argument, nullptr, OPT_PRINT},
+      {"arena-capacity", required_argument, nullptr, OPT_ARENA_CAPACITY},
       {nullptr, 0, nullptr, 0}};
 
+  opterr = 0;
   int opt;
-  while ((opt = getopt_long(argc, argv, "vxbp", long_options, nullptr)) != -1) {
+  while ((opt = getopt_long(argc, argv, ":vxbpa:", long_options, nullptr)) !=
+         -1) {
     switch (opt) {
     case OPT_DENSE:
       args.dense = true;
@@ -74,6 +99,17 @@ int main(int argc, char **argv) {
     case OPT_PRINT:
       args.print = true;
       break;
+    case OPT_ARENA_CAPACITY:
+      if (!parse_arena_capacity(optarg, args.arena_capacity)) {
+        std::cerr << "Error: arena capacity must be a positive integer within "
+                     "the supported range.\n";
+        return 1;
+      }
+      break;
+    case ':':
+      std::cerr << "Error: --arena-capacity requires a value.\n";
+      print_usage(argv[0]);
+      return 1;
     default:
       print_usage(argv[0]);
       return 1;
@@ -128,7 +164,8 @@ void dense_case(const arguments &args) {
     exit(1);
   }
 
-  DenseMultiPropertyMonitor monitor = createDenseMultiPropertyMonitor(3000);
+  DenseMultiPropertyMonitor monitor =
+      createDenseMultiPropertyMonitor(args.arena_capacity);
   ptl_parser parser;
 
   for (const auto &f : formulas) {
@@ -199,7 +236,8 @@ void dense_binary_case(const arguments &args) {
     exit(1);
   }
 
-  DenseMultiPropertyMonitor monitor = createDenseMultiPropertyMonitor(3000);
+  DenseMultiPropertyMonitor monitor =
+      createDenseMultiPropertyMonitor(args.arena_capacity);
   ptl_parser parser;
 
   for (const auto &f : formulas) {
@@ -271,7 +309,7 @@ void discrete_case(const arguments &args) {
   }
 
   DiscreteMultiPropertyMonitor monitor =
-      createDiscreteMultiPropertyMonitor(3000);
+      createDiscreteMultiPropertyMonitor(args.arena_capacity);
   ptl_parser parser;
 
   for (const auto &f : formulas) {
@@ -334,7 +372,7 @@ void discrete_binary_case(const arguments &args) {
   }
 
   DiscreteMultiPropertyMonitor monitor =
-      createDiscreteMultiPropertyMonitor(3000);
+      createDiscreteMultiPropertyMonitor(args.arena_capacity);
   ptl_parser parser;
 
   for (const auto &f : formulas) {

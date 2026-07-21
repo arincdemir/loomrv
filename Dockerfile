@@ -138,6 +138,9 @@ COPY loomrv-misc/ /app/loomrv-misc/
 #            --discrete-dir results/2026-05-02_00-58-23
 COPY results/ /app/loomrv-misc/results/
 
+# ── small, reusable CLI examples ──────────────────────────────
+COPY examples/ /app/examples/
+
 # ── test data ──────────────────────────────────────────────────
 # Downloaded from the GitHub release so the image is self-contained.
 # Extracted to /app/data/fullsuite/ — scripts reference ../data/fullsuite.

@@ -7,6 +7,7 @@
 | `include/loomrv` | Public headers and parser grammar |
 | `src` | Engine, feeders, readers, CLI, and utilities |
 | `tests` | Catch2 tests |
+| `examples` | Reusable CLI trace, properties, and expected output |
 | `benchmarks` | C++ benchmark harnesses |
 | `loomrv-misc` | Benchmark scripts and Python tools |
 | `results` | Bundled raw Hyperfine results |

@@ -33,10 +33,8 @@ The multi-stage image builds LoomRV and Reelay, installs benchmark tools, includ
 ### Run A Quick Example
 
 ```bash
-docker run --rm --entrypoint bash loomrv-bench -c '
-  printf "{\"time\":1,\"p\":true,\"q\":false}\n{\"time\":2,\"p\":true,\"q\":false}\n{\"time\":3,\"p\":false,\"q\":true}\n{\"time\":4,\"p\":true,\"q\":true}\n" > /tmp/trace.jsonl
-  printf "historically({p})\nonce({q})\n{p} since {q}\n" > /tmp/props.txt
-  /app/build/loomrv --discrete --print /tmp/trace.jsonl /tmp/props.txt'
+docker run --rm --entrypoint /app/build/loomrv loomrv-bench \
+  --discrete --print /app/examples/trace.jsonl /app/examples/properties.txt
 ```
 
 Expected output:
@@ -63,6 +61,29 @@ cmake --build build -j
 ```
 
 The build also downloads the test dataset if `data/fullsuite` is absent.
+
+Run the same quick example natively:
+
+```bash
+./build/loomrv --discrete --print \
+  examples/trace.jsonl examples/properties.txt
+```
+
+Compare its output with `examples/expected-discrete.txt`.
+
+### Run Tests
+
+Run the registered Catch2 tests through CTest:
+
+```bash
+ctest --test-dir build --output-on-failure
+```
+
+The Catch2 executable remains available for filters and direct runs:
+
+```bash
+./build/tests/unit_tests
+```
 
 ### Embed With CMake
 
@@ -94,6 +115,7 @@ loomrv [OPTION...] TRACE_FILE PROPERTIES_FILE
 | `-x`, `--discrete` | Use discrete time |
 | `-b`, `--binary` | Read the project-specific `.row.bin` format instead of NDJSON |
 | `-p`, `--print` | Print per-timestep or per-interval verdicts |
+| `-a N`, `--arena-capacity N` | Set each interval arena buffer's capacity; default `3000` |
 
 Examples:
 
@@ -101,9 +123,14 @@ Examples:
 ./build/loomrv --discrete --print trace.jsonl properties.txt
 ./build/loomrv --dense --print trace.jsonl properties.txt
 ./build/loomrv --discrete --binary trace.row.bin properties.txt
+./build/loomrv --arena-capacity 6000 --dense trace.jsonl properties.txt
 ```
 
 Without `--print`, LoomRV evaluates the entire trace without writing verdicts. This mode is useful for benchmarking.
+
+Arena capacity must be a positive integer. Choose a value large enough for the
+compiled properties and the interval fragmentation expected from the trace;
+the CLI does not automatically resize the preallocated arena.
 
 ## Helper Utilities
 
@@ -129,14 +156,6 @@ Without `--print`, LoomRV evaluates the entire trace without writing verdicts. T
 ### Configuration cannot download dependencies or test data
 
 The initial native build fetches C++ dependencies and, when absent, the Timescales test dataset. Confirm that GitHub is reachable, then rerun the CMake configuration or build. The Docker build likewise requires network access.
-
-### `ctest` reports that no tests were found
-
-The Catch2 executable is built but is not currently registered with CTest. Run it directly:
-
-```bash
-./build/tests/unit_tests
-```
 
 ### A property fails to parse
 

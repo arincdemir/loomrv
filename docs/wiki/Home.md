@@ -49,10 +49,12 @@ once({q})
 {p} since {q}
 ```
 
-Run all three properties in one discrete-time monitor:
+The repository stores these inputs under `examples/`. Run all three properties
+in one discrete-time monitor:
 
 ```bash
-./build/loomrv --discrete --print trace.jsonl properties.txt
+./build/loomrv --discrete --print \
+  examples/trace.jsonl examples/properties.txt
 ```
 
 Output:

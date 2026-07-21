@@ -7,30 +7,23 @@ LoomRV uses Catch2 for unit and integration tests.
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
-./build/tests/unit_tests
+ctest --test-dir build --output-on-failure
 ```
 
-On the documented repository state, this command passes:
-
-```text
-All tests passed (4602936 assertions in 52 test cases)
-```
-
-The tests consume the dataset under `data/fullsuite`. CMake downloads it automatically when it is absent.
-
-## Current CTest Note
-
-Although CTest files are generated, `ctest --test-dir build` currently reports no registered tests. Run the Catch2 test binary directly:
+CTest discovers the Catch2 test cases from the `unit_tests` executable. The
+executable can also be run directly when Catch2 filters or reporters are useful:
 
 ```bash
 ./build/tests/unit_tests
 ```
 
+The tests consume the dataset under `data/fullsuite`. CMake downloads it automatically when it is absent.
+
 ## Test Areas
 
 | Test file | Coverage |
 |---|---|
-| `test_parse.cpp` | Formula parsing, bounds, invalid syntax, proposition maps, and node counts |
+| `test_parse.cpp` | Formula parsing, property-root ordering, bounds, invalid syntax, proposition maps, and node counts |
 | `test_discrete.cpp` | Discrete operator semantics and Timescales benchmark traces |
 | `test_dense.cpp` | Dense interval semantics and Timescales benchmark traces |
 | `test_interval_set.cpp` | Arena lifecycle and interval-set operations |
@@ -65,7 +58,7 @@ Inspect cross-property sharing:
 Run a CLI trace and inspect verdicts:
 
 ```bash
-./build/loomrv --discrete --print trace.jsonl properties.txt
+./build/loomrv --discrete --print examples/trace.jsonl examples/properties.txt
 ```
 
 ## Coverage

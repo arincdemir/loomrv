@@ -137,7 +137,11 @@ Binary feeders load binary rows and finalize the monitor automatically.
 
 The integer supplied to `createDenseMultiPropertyMonitor` and `createDiscreteMultiPropertyMonitor` determines the size of each interval arena buffer.
 
-Choose a capacity large enough for the compiled formulas and expected interval fragmentation. The CLI currently uses `3000`. Tests and focused examples often use smaller values.
+Choose a capacity large enough for the compiled formulas and expected interval
+fragmentation. The holder is preallocated and is not automatically resized.
+The CLI defaults to `3000` and exposes `-a N`/`--arena-capacity N` for selecting
+a different positive capacity. Tests and focused examples often use smaller
+values.
 
 ## Dependencies
 

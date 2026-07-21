@@ -416,3 +416,45 @@ TEST_CASE("Node count correctness", "[parse]") {
         REQUIRE(monitor.nodes.size() == 17);
     }
 }
+
+TEST_CASE("Property roots preserve parse order when nodes are reused",
+          "[parse][multi-property]") {
+    SECTION("discrete roots and verdicts use the semantic parse result") {
+        ptl_parser parser;
+        auto monitor = createDiscreteMultiPropertyMonitor(100);
+
+        parser.parse_discrete("once({p})", monitor);
+        parser.parse_discrete("{p}", monitor);
+        parser.parse_discrete("{p}", monitor);
+
+        REQUIRE(monitor.nodes.size() == 2);
+        REQUIRE(monitor.propertyRootNodeIndexes == std::vector<int>{1, 0, 0});
+
+        finalize_monitor(monitor, {"p"});
+        REQUIRE(eval_multi_property(monitor, 0, std::vector<bool>{true}) ==
+                std::vector<bool>{true, true, true});
+        REQUIRE(eval_multi_property(monitor, 1, std::vector<bool>{false}) ==
+                std::vector<bool>{true, false, false});
+    }
+
+    SECTION("dense roots and verdicts survive unrelated appended nodes") {
+        ptl_parser parser;
+        auto monitor = createDenseMultiPropertyMonitor(100);
+
+        parser.parse_dense("{p}", monitor);
+        parser.parse_dense("{q}", monitor);
+        parser.parse_dense("{p}", monitor);
+
+        REQUIRE(monitor.nodes.size() == 2);
+        REQUIRE(monitor.propertyRootNodeIndexes == std::vector<int>{0, 1, 0});
+
+        finalize_monitor(monitor, {"p", "q"});
+        const auto &outputs = eval_multi_property(
+            monitor, 0, 5, std::vector<bool>{true, false});
+        REQUIRE(toVectorIntervals(outputs[0]) ==
+                std::vector<Interval>{{0, 5}});
+        REQUIRE(toVectorIntervals(outputs[1]).empty());
+        REQUIRE(toVectorIntervals(outputs[2]) ==
+                std::vector<Interval>{{0, 5}});
+    }
+}

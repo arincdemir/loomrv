@@ -66,6 +66,19 @@ python3 loomrv-misc/tools/generate_tables.py \
   --discrete-dir results/2026-05-02_00-58-23
 ```
 
+The generator's headings map to the paper as follows. Table I is the
+architecture comparison in the paper and is not generated from timing JSON.
+
+| Paper table | Generated content |
+|---|---|
+| Table II | Cross-property sharing, discrete |
+| Table III | Cross-property sharing, dense |
+| Table IV | Single-property, discrete |
+| Table V | Single-property dense, JSON |
+| Table VI | Single-property dense, binary |
+| Table VII | Multi-property, discrete |
+| Table VIII | Multi-property, dense |
+
 ## Run Benchmarks With Docker
 
 Create a host results directory:
