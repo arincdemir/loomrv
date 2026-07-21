@@ -8,6 +8,31 @@
 
 namespace loomrv {
 
+namespace {
+
+struct PropositionUpdate {
+  unsigned int nodeIndex;
+  bool value;
+};
+
+const std::vector<std::pair<std::string_view, bool>> noNamedUpdates;
+
+void apply_updates(DenseMultiPropertyMonitor &monitor,
+                   const std::vector<PropositionUpdate> &updates) {
+  for (const auto &update : updates) {
+    monitor.nodes[update.nodeIndex].propositionValue = update.value;
+  }
+}
+
+void apply_updates(DiscreteMultiPropertyMonitor &monitor,
+                   const std::vector<PropositionUpdate> &updates) {
+  for (const auto &update : updates) {
+    monitor.nodes[update.nodeIndex].output = update.value;
+  }
+}
+
+} // namespace
+
 struct DenseJsonFeeder {
   DenseMultiPropertyMonitor &monitor;
   simdjson::padded_string json_data;
@@ -16,12 +41,12 @@ struct DenseJsonFeeder {
   simdjson::ondemand::document_stream::iterator it;
   bool started = false;
 
-  // Reusable input struct (avoids allocation per iteration)
+  // Reusable interval input; proposition updates are applied directly by index.
   TimescalesInput input;
 
-  // Current timestep state
+  // Updates belonging to the row currently being parsed.
   unsigned int curTime = 0;
-  std::vector<std::pair<std::string_view, bool>> curPropositions;
+  std::vector<PropositionUpdate> curUpdates;
 
   // Whether we have consumed at least one row (need two rows to produce output)
   bool hasPrev = false;
@@ -54,23 +79,24 @@ DenseJsonFeeder *create_dense_json_feeder(DenseMultiPropertyMonitor &monitor,
   feeder->it = feeder->docs.begin();
   feeder->started = true;
 
-  // Pre-allocate proposition vectors to avoid per-row allocations
+  // Pre-allocate the update buffer to avoid per-row allocations.
   size_t propCount = monitor.proposition_map.size();
-  feeder->curPropositions.reserve(propCount);
-  feeder->input.propositionInputs.reserve(propCount);
+  feeder->curUpdates.reserve(propCount);
 
   return feeder;
 }
 
 static bool
 parse_row(simdjson::ondemand::document_reference &doc, unsigned int &time_out,
-          std::vector<std::pair<std::string_view, bool>> &props_out) {
+          std::vector<PropositionUpdate> &updates_out,
+          const std::map<std::string, unsigned int, std::less<>>
+              &proposition_map) {
   simdjson::ondemand::object obj;
   if (doc.get_object().get(obj)) {
     return false;
   }
 
-  props_out.clear();
+  updates_out.clear();
 
   for (auto field : obj) {
     std::string_view key = field.unescaped_key();
@@ -81,9 +107,13 @@ parse_row(simdjson::ondemand::document_reference &doc, unsigned int &time_out,
         time_out = time_val;
       }
     } else {
+      auto proposition = proposition_map.find(key);
+      if (proposition == proposition_map.end()) {
+        continue;
+      }
       bool val = false;
       if (!field.value().get(val)) {
-        props_out.push_back({key, val});
+        updates_out.push_back({proposition->second, val});
       }
     }
   }
@@ -96,24 +126,23 @@ const std::vector<db_interval_set::IntervalSet> *feed_next(DenseJsonFeeder *feed
 
   while (feeder->it != feeder->docs.end()) {
     simdjson::ondemand::document_reference doc = *feeder->it;
-    ++(feeder->it);
 
     unsigned int time_val = 0;
 
-    if (!parse_row(doc, time_val, feeder->curPropositions)) {
+    if (!parse_row(doc, time_val, feeder->curUpdates,
+                   feeder->monitor.proposition_map)) {
+      ++(feeder->it);
       continue;
     }
+    ++(feeder->it);
 
     if (!feeder->hasPrev) {
       feeder->curTime = time_val;
-      // Move cur into input for safe-keeping, cur will be repopulated next
-      // iteration
-      feeder->input.propositionInputs.swap(feeder->curPropositions);
+      apply_updates(feeder->monitor, feeder->curUpdates);
       feeder->hasPrev = true;
       continue;
     }
 
-    // Previous is already in input.propositionInputs from last iteration
     feeder->input.startTime = feeder->curTime;
     feeder->input.endTime = time_val;
 
@@ -122,9 +151,9 @@ const std::vector<db_interval_set::IntervalSet> *feed_next(DenseJsonFeeder *feed
     feeder->lastStartTime = feeder->input.startTime;
     feeder->lastEndTime = feeder->input.endTime;
 
-    // Current becomes next previous: swap into input
+    // This row establishes the valuation for the following interval.
     feeder->curTime = time_val;
-    feeder->input.propositionInputs.swap(feeder->curPropositions);
+    apply_updates(feeder->monitor, feeder->curUpdates);
 
     return &result;
   }
@@ -151,9 +180,10 @@ struct DiscreteJsonFeeder {
   simdjson::ondemand::document_stream docs;
   simdjson::ondemand::document_stream::iterator it;
   bool started = false;
+  bool initialized = false;
 
-  // Reusable buffer
-  std::vector<std::pair<std::string_view, bool>> namedProps;
+  // Reusable indexed update buffer.
+  std::vector<PropositionUpdate> updates;
 
   int lastTime = 0;
 
@@ -183,7 +213,7 @@ create_discrete_json_feeder(DiscreteMultiPropertyMonitor &monitor,
   feeder->started = true;
 
   size_t propCount = monitor.proposition_map.size();
-  feeder->namedProps.reserve(propCount);
+  feeder->updates.reserve(propCount);
 
   return feeder;
 }
@@ -197,16 +227,28 @@ const std::vector<bool> *feed_next(DiscreteJsonFeeder *feeder) {
 
   while (feeder->it != feeder->docs.end()) {
     simdjson::ondemand::document_reference doc = *feeder->it;
-    ++(feeder->it);
 
     unsigned int time_val = 0;
 
-    if (!parse_row(doc, time_val, feeder->namedProps)) {
+    if (!parse_row(doc, time_val, feeder->updates,
+                   feeder->monitor.proposition_map)) {
+      ++(feeder->it);
+      continue;
+    }
+    ++(feeder->it);
+
+    apply_updates(feeder->monitor, feeder->updates);
+
+    if (!feeder->initialized) {
+      eval_multi_property(feeder->monitor, static_cast<int>(time_val),
+                          noNamedUpdates);
+      feeder->lastTime = static_cast<int>(time_val);
+      feeder->initialized = true;
       continue;
     }
 
     const auto &result = eval_multi_property(
-        feeder->monitor, static_cast<int>(time_val), feeder->namedProps);
+        feeder->monitor, static_cast<int>(time_val), noNamedUpdates);
 
     feeder->lastTime = static_cast<int>(time_val);
 

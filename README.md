@@ -7,6 +7,13 @@ execution schedule and employs a zero-allocation double-buffered arena for state
 management.  This is the artifact accompanying the paper
 *"Multi-Property Temporal Logic Monitoring"*.
 
+## Documentation
+
+The complete LoomRV user and developer manual is available in the
+[GitHub Wiki](https://github.com/arincdemir/loomrv/wiki). A versioned snapshot
+is also bundled with the source under [`docs/wiki`](docs/wiki/Home.md) so that
+each repository revision retains the documentation that applies to it.
+
 The object-oriented baseline implementation by @doganulus can be seen at
 [reelay](https://github.com/doganulus/reelay).
 
@@ -18,9 +25,9 @@ The object-oriented baseline implementation by @doganulus can be seen at
 loomrv/
 ├── LICENSE                         MPL 2.0
 ├── README.md                       This file
+├── docs/wiki/                      Versioned project documentation snapshot
 ├── Dockerfile                      Multi-stage build for the benchmarking container
 ├── docker-entrypoint.sh            Container entrypoint (dispatches benchmark suites)
-├── BENCHMARKS.md                   Condensed benchmark running instructions
 │
 ├── src/                            LoomRV C++ source code
 ├── include/                        LoomRV C++ headers
@@ -83,11 +90,16 @@ docker --version   # Should print Docker version 20.10 or newer
 ## 1 — Build the Image
 
 > [!IMPORTANT]
-> **Run all commands from the artfiact root** (`loomrv-artifact/`).
+> **Run all commands from the artifact root** (`loomrv-artifact/`).
 
 ```bash
 docker build -t loomrv-bench .
 ```
+
+When the build context is a Git checkout, the image automatically records the
+checked-out commit for use in benchmark result filenames. Builds from a source
+archive use `unknown`; an explicit value can be supplied in that case with
+`--build-arg GIT_COMMIT=<revision>`.
 
 What happens during the build:
 

@@ -212,8 +212,10 @@ bool run_evaluation(std::vector<DiscreteNode> &nodes, db_interval_set::IntervalS
 
 bool run_evaluation(std::vector<DiscreteNode> &nodes, std::map<std::string, unsigned int, std::less<>> &proposition_map, db_interval_set::IntervalSetHolder &setHolder, const int time, const std::vector<std::pair<std::string_view, bool>> &propositionInputs) {
     for (const auto &propInput : propositionInputs) {
-        auto &propNode = nodes[proposition_map.find(propInput.first)->second];
-        propNode.output = propInput.second;
+        auto proposition = proposition_map.find(propInput.first);
+        if (proposition != proposition_map.end()) {
+            nodes[proposition->second].output = propInput.second;
+        }
     }
 
     int nodeCount = nodes.size();
@@ -361,9 +363,10 @@ const std::vector<db_interval_set::IntervalSet> &eval_multi_property(DenseMultiP
 
 db_interval_set::IntervalSet run_evaluation(std::vector<DenseNode> &nodes, std::map<std::string, unsigned int, std::less<>> &proposition_map, db_interval_set::IntervalSetHolder &setHolder, const int startTime, const int endTime, const std::vector<std::pair<std::string_view, bool>> &propositionInputs) {
     for(const auto &propInput: propositionInputs) {
-        auto &propNode = nodes[proposition_map.find(propInput.first)->second];
-        if (propInput.second) propNode.output = db_interval_set::fromInterval(setHolder, {startTime, endTime});
-        else propNode.output = db_interval_set::empty(setHolder);
+        auto proposition = proposition_map.find(propInput.first);
+        if (proposition != proposition_map.end()) {
+            nodes[proposition->second].propositionValue = propInput.second;
+        }
     }
     
     int nodeCount = nodes.size();
@@ -372,6 +375,8 @@ db_interval_set::IntervalSet run_evaluation(std::vector<DenseNode> &nodes, std::
         switch (curNode.type)
         {          
         case NodeType::PROPOSITION:
+            if (curNode.propositionValue) curNode.output = db_interval_set::fromInterval(setHolder, {startTime, endTime});
+            else curNode.output = db_interval_set::empty(setHolder);
             break;
         case NodeType::AND:
             curNode.output = db_interval_set::intersectSets(setHolder, nodes[curNode.leftOperandIndex].output, nodes[curNode.rightOperandIndex].output);

@@ -1,0 +1,153 @@
+# Getting Started
+
+The Docker workflow is the simplest way to reproduce the complete artifact. A native CMake build is more convenient for development.
+
+## Get The Source
+
+```bash
+git clone https://github.com/arincdemir/loomrv.git
+cd loomrv
+```
+
+The commands below are run from this repository root.
+
+## Docker Workflow
+
+### Requirements
+
+- Docker 20.10 or newer
+- Approximately 12 GB free disk space
+- At least 4 GB RAM
+- Network access while building the image
+
+### Build
+
+From the repository root:
+
+```bash
+docker build -t loomrv-bench .
+```
+
+The multi-stage image builds LoomRV and Reelay, installs benchmark tools, includes bundled result files, and downloads the test dataset.
+
+### Run A Quick Example
+
+```bash
+docker run --rm --entrypoint bash loomrv-bench -c '
+  printf "{\"time\":1,\"p\":true,\"q\":false}\n{\"time\":2,\"p\":true,\"q\":false}\n{\"time\":3,\"p\":false,\"q\":true}\n{\"time\":4,\"p\":true,\"q\":true}\n" > /tmp/trace.jsonl
+  printf "historically({p})\nonce({q})\n{p} since {q}\n" > /tmp/props.txt
+  /app/build/loomrv --discrete --print /tmp/trace.jsonl /tmp/props.txt'
+```
+
+Expected output:
+
+```text
+2:true,false,false
+3:false,true,true
+4:false,true,true
+```
+
+## Native Build
+
+### Requirements
+
+- CMake 3.15 or newer
+- C++20 compiler
+- Git and network access during initial configuration
+
+CMake fetches `simdjson`, `cpp-peglib`, and Catch2.
+
+```bash
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+```
+
+The build also downloads the test dataset if `data/fullsuite` is absent.
+
+### Embed With CMake
+
+Until LoomRV provides an installation target, a CMake project can include the repository as a subdirectory:
+
+```cmake
+add_subdirectory(external/loomrv)
+
+add_executable(my_monitor main.cpp)
+target_link_libraries(my_monitor PRIVATE loomrv_lib)
+```
+
+The `loomrv_lib` target exports the `include` directory and its required parser and JSON dependencies. Application code can then include headers such as:
+
+```cpp
+#include <loomrv/MTLEngine.hpp>
+#include <loomrv/ptl.hpp>
+```
+
+## CLI Usage
+
+```text
+loomrv [OPTION...] TRACE_FILE PROPERTIES_FILE
+```
+
+| Option | Description |
+|---|---|
+| `-v`, `--dense` | Use dense time; this is the default |
+| `-x`, `--discrete` | Use discrete time |
+| `-b`, `--binary` | Read the project-specific `.row.bin` format instead of NDJSON |
+| `-p`, `--print` | Print per-timestep or per-interval verdicts |
+
+Examples:
+
+```bash
+./build/loomrv --discrete --print trace.jsonl properties.txt
+./build/loomrv --dense --print trace.jsonl properties.txt
+./build/loomrv --discrete --binary trace.row.bin properties.txt
+```
+
+Without `--print`, LoomRV evaluates the entire trace without writing verdicts. This mode is useful for benchmarking.
+
+## Helper Utilities
+
+```bash
+./build/check-grammar "once[:10]({p})"
+./build/count-nodes properties.txt
+./build/verify-dedup properties.txt
+```
+
+- `check-grammar` validates one formula.
+- `count-nodes` compares independent node counts with the shared multi-property graph.
+- `verify-dedup` reports deduplication within each individual formula.
+
+## Next Steps
+
+- Review [Temporal Logic Syntax](Temporal-Logic-Syntax.md).
+- Learn trace schemas in [Input and Output Formats](Input-and-Output-Formats.md).
+- Embed the engine using the [Library API](Library-API.md).
+- Reproduce measurements from [Benchmarks and Results](Benchmarks-and-Results.md).
+
+## Troubleshooting
+
+### Configuration cannot download dependencies or test data
+
+The initial native build fetches C++ dependencies and, when absent, the Timescales test dataset. Confirm that GitHub is reachable, then rerun the CMake configuration or build. The Docker build likewise requires network access.
+
+### `ctest` reports that no tests were found
+
+The Catch2 executable is built but is not currently registered with CTest. Run it directly:
+
+```bash
+./build/tests/unit_tests
+```
+
+### A property fails to parse
+
+Validate it separately to obtain a focused grammar error, then compare it with the supported syntax:
+
+```bash
+./build/check-grammar "historically({p} implies once[:10]({q}))"
+```
+
+See [Temporal Logic Syntax](Temporal-Logic-Syntax.md) for operator spelling, bounds, and precedence.
+
+### The first CLI result appears later than expected
+
+Dense evaluation needs two timestamps to define its first interval. In the current JSON CLI workflow, the first discrete row also initializes feeder state, so printed discrete verdicts begin with the second row. Direct discrete library calls return a verdict on every evaluation call.

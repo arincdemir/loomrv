@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Use a runtime override when supplied; otherwise load the revision detected
+# from the build context. Source archives without Git metadata record unknown.
+if [ -z "${GIT_COMMIT:-}" ]; then
+  if [ -r /usr/local/share/loomrv/git-commit ]; then
+    IFS= read -r GIT_COMMIT < /usr/local/share/loomrv/git-commit || true
+  fi
+  export GIT_COMMIT="${GIT_COMMIT:-unknown}"
+fi
+
 # ── git shim ──────────────────────────────────────────────────────────────────
 # Benchmark scripts call `git rev-parse HEAD` to embed the commit hash in
 # result filenames.  Inside the container there is no real git repo, so we
-# intercept that call and return the GIT_COMMIT value baked in at build time
-# (via --build-arg GIT_COMMIT=...).  All other git sub-commands are forwarded
-# to the real git binary.
+# intercept that call and return the detected or explicitly overridden
+# GIT_COMMIT value. All other git sub-commands go to the real git binary.
 mkdir -p /tmp/git-shim
 cat > /tmp/git-shim/git <<'GITSHIM'
 #!/bin/sh
@@ -88,8 +96,8 @@ Options passed as environment variables (-e KEY=VALUE):
 
   GIT_COMMIT
       Overrides the commit hash embedded in result filenames at RUNTIME.
-      Normally this is baked in at build time via --build-arg; set this
-      env var only if you need an ad-hoc override.
+      Normally this is detected automatically from the build context; set
+      this env var only if you need an ad-hoc override.
 
 Examples:
 
@@ -115,7 +123,10 @@ HELP
     ;;
 
   *)
-    # Any other argument is treated as a script name or arbitrary command.
+    # Run commands directly; treat a non-executable file as a Bash script.
+    if command -v "$1" >/dev/null 2>&1; then
+      exec "$@"
+    fi
     exec bash "$@"
     ;;
 
