@@ -93,3 +93,24 @@ add_custom_command(TARGET unit_tests POST_BUILD
 
 include(CTest)
 include(Catch)
+catch_discover_tests(unit_tests)
+
+find_package(Python3 COMPONENTS Interpreter)
+if(Python3_Interpreter_FOUND)
+    add_test(
+        NAME cli_version_and_count_nodes_reports
+        COMMAND "${Python3_EXECUTABLE}"
+                "${CMAKE_CURRENT_SOURCE_DIR}/test_cli_tools.py"
+                --loomrv "$<TARGET_FILE:loomrv>"
+                --count-nodes "$<TARGET_FILE:count-nodes>"
+                --expected-version "${PROJECT_VERSION}"
+    )
+
+    add_test(
+        NAME documentation_validation
+        COMMAND "${Python3_EXECUTABLE}"
+                "${CMAKE_SOURCE_DIR}/docs/wiki_tool.py"
+                validate
+                --build-dir "${CMAKE_BINARY_DIR}"
+    )
+endif()

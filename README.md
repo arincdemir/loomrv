@@ -7,6 +7,13 @@ execution schedule and employs a zero-allocation double-buffered arena for state
 management.  This is the artifact accompanying the paper
 *"Multi-Property Temporal Logic Monitoring"*.
 
+## Documentation
+
+The complete LoomRV user and developer manual is versioned under
+[`docs/wiki`](docs/wiki/Home.md), which is the documentation source of truth.
+The [GitHub Wiki](https://github.com/arincdemir/loomrv/wiki) is generated from
+that snapshot for browsing.
+
 The object-oriented baseline implementation by @doganulus can be seen at
 [reelay](https://github.com/doganulus/reelay).
 
@@ -18,9 +25,10 @@ The object-oriented baseline implementation by @doganulus can be seen at
 loomrv/
 ├── LICENSE                         MPL 2.0
 ├── README.md                       This file
+├── docs/wiki/                      Versioned project documentation snapshot
+├── examples/                       Small trace, property, and expected-output files
 ├── Dockerfile                      Multi-stage build for the benchmarking container
 ├── docker-entrypoint.sh            Container entrypoint (dispatches benchmark suites)
-├── BENCHMARKS.md                   Condensed benchmark running instructions
 │
 ├── src/                            LoomRV C++ source code
 ├── include/                        LoomRV C++ headers
@@ -42,9 +50,6 @@ loomrv/
 ├── results/                        Pre-computed benchmark results
 │   ├── 2026-05-01_23-08-06/        Dense-time results (hyperfine JSON)
 │   └── 2026-05-02_00-58-23/        Discrete-time results (hyperfine JSON)
-│
-└── multi-property-temporal-logic-monitoring-latex/
-    └── main.tex                    Paper source
 ```
 
 ---
@@ -83,11 +88,16 @@ docker --version   # Should print Docker version 20.10 or newer
 ## 1 — Build the Image
 
 > [!IMPORTANT]
-> **Run all commands from the artfiact root** (`loomrv-artifact/`).
+> **Run all commands from the artifact root** (`loomrv-artifact/`).
 
 ```bash
 docker build -t loomrv-bench .
 ```
+
+When the build context is a Git checkout, the image automatically records the
+checked-out commit for use in benchmark result filenames. Builds from a source
+archive use `unknown`; an explicit value can be supplied in that case with
+`--build-arg GIT_COMMIT=<revision>`.
 
 What happens during the build:
 
@@ -162,15 +172,13 @@ with `1`, without modifying any benchmark script.
 
 ## 5 — Quick Example
 
-To verify the tool works and see multi-property monitoring in action, run a
-one-liner inside the container.  Three formulas are monitored simultaneously
-over the same trace:
+To verify the tool works and see multi-property monitoring in action, run the
+versioned example files included in the image. Three formulas are monitored
+simultaneously over the same trace:
 
 ```bash
-docker run --rm --entrypoint bash loomrv-bench -c '
-  printf "{\"time\":1,\"p\":true,\"q\":false}\n{\"time\":2,\"p\":true,\"q\":false}\n{\"time\":3,\"p\":false,\"q\":true}\n{\"time\":4,\"p\":true,\"q\":true}\n" > /tmp/trace.jsonl
-  printf "historically({p})\nonce({q})\n{p} since {q}\n" > /tmp/props.txt
-  /app/build/loomrv --discrete --print /tmp/trace.jsonl /tmp/props.txt'
+docker run --rm --entrypoint /app/build/loomrv loomrv-bench \
+  --discrete --print /app/examples/trace.jsonl /app/examples/properties.txt
 ```
 
 **Expected output** (three comma-separated verdicts per timestep, one per
@@ -192,6 +200,9 @@ t=2 onward.
 | `{p} since {q}` | Has `p` held at every step since the last `q`? | **false** — `q` never held | **true** — `q` holds now | **true** — `q` at t=3, `p` since |
 
 LoomRV evaluates all three properties in a single pass over the trace.
+The same inputs and expected output are available under `examples/` for native
+runs. The CLI allocates `3000` entries per interval arena buffer by default;
+use `-a N` or `--arena-capacity N` to select a different positive capacity.
 
 ---
 
@@ -207,8 +218,8 @@ docker run --rm --entrypoint bash loomrv-bench -c \
       --discrete-dir results/2026-05-02_00-58-23'
 ```
 
-This prints all benchmark tables (Tables 2–7 from the paper) with minimum
-wall-clock times and computed speedup ratios.
+This prints the generated benchmark tables (Tables II–VIII from the paper)
+with minimum wall-clock times and computed speedup ratios.
 
 ### Generating Tables from Your Own Results
 
@@ -239,13 +250,13 @@ You can also pass only one of the two flags if you ran only one suite.
 
 | Paper Table | Description | Result Files |
 |---|---|---|
-| Table 2 | CSE sensitivity (discrete) | `bench_discrete_*.json`, `bench_binary_discrete_*.json` |
-| Table 3 | CSE sensitivity (dense) | `bench_*.json`, `bench_binary_*.json` (in dense dir) |
-| Table 4 | Single-property (discrete) | `loomrv-discrete-benchmark-json.sh.*`, `ryjson-discrete-benchmark.sh.*`, `loomrv-discrete-benchmark-bin.sh.*`, `rybinx-discrete-benchmark.sh.*` |
-| Table 5 | Single-property dense (JSON) | `loomrv-benchmark-dense.sh.*`, `ryjson-benchmark-dense.sh.*` |
-| Table 5b | Single-property dense (binary) | `loomrv-benchmark-dense-binary.sh.*`, `rybinx-benchmark-dense.sh.*` |
-| Table 6 | Multi-property (discrete) | `*-discrete-benchmark-multi*.sh.*`, `*-discrete-benchmark-single*.sh.*` |
-| Table 7 | Multi-property (dense) | `*-benchmark-dense-multi*.sh.*`, `*-benchmark-dense-single*.sh.*` |
+| Table II | CSE sensitivity (discrete) | `bench_discrete_*.json`, `bench_binary_discrete_*.json` |
+| Table III | CSE sensitivity (dense) | `bench_*.json`, `bench_binary_*.json` (in dense dir) |
+| Table IV | Single-property (discrete) | `loomrv-discrete-benchmark-json.sh.*`, `ryjson-discrete-benchmark.sh.*`, `loomrv-discrete-benchmark-bin.sh.*`, `rybinx-discrete-benchmark.sh.*` |
+| Table V | Single-property dense (JSON) | `loomrv-benchmark-dense.sh.*`, `ryjson-benchmark-dense.sh.*` |
+| Table VI | Single-property dense (binary) | `loomrv-benchmark-dense-binary.sh.*`, `rybinx-benchmark-dense.sh.*` |
+| Table VII | Multi-property (discrete) | `*-discrete-benchmark-multi*.sh.*`, `*-discrete-benchmark-single*.sh.*` |
+| Table VIII | Multi-property (dense) | `*-benchmark-dense-multi*.sh.*`, `*-benchmark-dense-single*.sh.*` |
 
 ---
 
@@ -265,6 +276,7 @@ Relevant paths:
 | `/app/build/check-grammar` | Formula grammar checker |
 | `/usr/local/bin/rybinx` | Reelay binary-format monitor |
 | `/usr/local/bin/ryjson` | Reelay JSON-format monitor |
+| `/app/examples/` | Reusable trace, properties, and expected output |
 | `/app/data/fullsuite/` | Pre-generated test data (10 pattern families) |
 | `/app/loomrv-misc/tools/` | Python helper scripts |
 

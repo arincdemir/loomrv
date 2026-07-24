@@ -7,13 +7,17 @@ data/
 # reelay subproject — cloned fresh from GitHub during docker build
 reelay/
 
-# Git history — commit hash is passed via --build-arg GIT_COMMIT instead
-.git/
+# Git metadata — expose only enough information to resolve HEAD automatically.
+# Object data, configuration, hooks, logs, and the index stay out of the context.
+.git/*
+!.git/HEAD
+!.git/packed-refs
+!.git/refs/
+!.git/refs/**
 
 # Docker infrastructure files (no need to COPY these into the image)
 Dockerfile
 .dockerignore
-BENCHMARKS.md
 
 # Compiled object files and static libraries
 *.o

@@ -1,4 +1,5 @@
 data/*
+!data/sparse_updates.jsonl
 build/
 .vscode/
 misc/

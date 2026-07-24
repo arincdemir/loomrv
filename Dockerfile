@@ -68,7 +68,41 @@ RUN cmake -S . -B build \
 
 
 # ================================================================
-# Stage 3 — Runtime image
+# Stage 3 — Resolve source revision
+# ================================================================
+FROM ubuntu:24.04 AS revision-detector
+
+# A caller can override automatic detection when building from a source archive
+# or another context without Git metadata.
+ARG GIT_COMMIT=
+
+WORKDIR /context
+COPY . .
+
+# .dockerignore exposes only HEAD, refs, and packed-refs from .git. Reading
+# those files is enough to resolve both ordinary and detached HEADs without
+# copying Git objects, configuration, logs, or credentials into the build.
+RUN set -eu; \
+    revision="${GIT_COMMIT}"; \
+    if [ -z "${revision}" ] && [ -f .git/HEAD ]; then \
+        head_value="$(tr -d '\r\n' < .git/HEAD)"; \
+        case "${head_value}" in \
+            "ref: "*) \
+                ref_name="${head_value#ref: }"; \
+                if [ -f ".git/${ref_name}" ]; then \
+                    revision="$(tr -d '\r\n' < ".git/${ref_name}")"; \
+                elif [ -f .git/packed-refs ]; then \
+                    revision="$(awk -v ref="${ref_name}" '$2 == ref { print $1; exit }' .git/packed-refs)"; \
+                fi \
+                ;; \
+            *) revision="${head_value}" ;; \
+        esac; \
+    fi; \
+    printf '%s\n' "${revision:-unknown}" > /git-commit
+
+
+# ================================================================
+# Stage 4 — Runtime image
 # ================================================================
 FROM ubuntu:24.04 AS runtime
 
@@ -103,6 +137,9 @@ COPY loomrv-misc/ /app/loomrv-misc/
 # Usage: python3 tools/generate_tables.py --dense-dir results/2026-05-01_23-08-06 \
 #            --discrete-dir results/2026-05-02_00-58-23
 COPY results/ /app/loomrv-misc/results/
+
+# ── small, reusable CLI examples ──────────────────────────────
+COPY examples/ /app/examples/
 
 # ── test data ──────────────────────────────────────────────────
 # Downloaded from the GitHub release so the image is self-contained.
@@ -150,17 +187,10 @@ RUN chmod +x /usr/local/bin/hyperfine
 
 # ── entrypoint ─────────────────────────────────────────────────
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY --from=revision-detector /git-commit /usr/local/share/loomrv/git-commit
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # ── environment ────────────────────────────────────────────────
-# GIT_COMMIT is hardcoded to the artifact's commit hash.  It can be overridden
-# at build time via --build-arg GIT_COMMIT=... if desired.
-# The entrypoint creates a git shim that returns this value for
-# `git rev-parse HEAD` calls — used by benchmark scripts to name result files.
-# TODO change this if commit changes.
-ARG  GIT_COMMIT=52c7b2f  
-ENV  GIT_COMMIT=${GIT_COMMIT}
-
 # Default data path expected by benchmark scripts (../data/fullsuite relative
 # to the /app/loomrv-misc workdir = /app/data/fullsuite).
 ENV  TESTDATA_DIR=../data/fullsuite

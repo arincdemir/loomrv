@@ -67,6 +67,9 @@ struct DenseNode {
     unsigned int rightOperandIndex; // unary operator operand sits here
     int a;
     int b;
+    // Retains the latest named-input valuation when a proposition is omitted
+    // from a subsequent sparse update.
+    bool propositionValue = false;
 };
 
 int add_with_inf(int a, int b);

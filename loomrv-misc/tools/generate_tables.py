@@ -150,7 +150,7 @@ def print_table_header(title):
 def table_cse(data, time_label, file_prefix_json, file_prefix_bin,
               cmd_reelay_json, cmd_loomrv_seq_json, cmd_loomrv_multi_json,
               cmd_reelay_bin, cmd_loomrv_seq_bin, cmd_loomrv_multi_bin):
-    """Print a CSE sensitivity table (Tables 2/3)."""
+    """Print a CSE sensitivity table (Tables II/III)."""
 
     header = f"{'Scenario':<20s} {'Comp.':>6s}  {'Reelay Seq':>11s} {'LoomRV Seq':>11s} {'LoomRV Multi':>13s}"
     print()
@@ -183,8 +183,8 @@ def table_cse(data, time_label, file_prefix_json, file_prefix_bin,
 
 
 def table_cse_discrete(data):
-    """Table 2: CSE sensitivity, discrete."""
-    print_table_header("Table 2 — Impact of Cross-Property Sharing (Discrete)")
+    """Table II: CSE sensitivity, discrete."""
+    print_table_header("Table II — Impact of Cross-Property Sharing (Discrete)")
     table_cse(
         data,
         time_label="discrete",
@@ -200,8 +200,8 @@ def table_cse_discrete(data):
 
 
 def table_cse_dense(data):
-    """Table 3: CSE sensitivity, dense."""
-    print_table_header("Table 3 — Impact of Cross-Property Sharing (Dense)")
+    """Table III: CSE sensitivity, dense."""
+    print_table_header("Table III — Impact of Cross-Property Sharing (Dense)")
     table_cse(
         data,
         time_label="dense",
@@ -217,8 +217,8 @@ def table_cse_dense(data):
 
 
 def table_single_discrete(data):
-    """Table 4: Single-property discrete-time."""
-    print_table_header("Table 4 — Single-Property Discrete-Time Monitoring")
+    """Table IV: Single-property discrete-time."""
+    print_table_header("Table IV — Single-Property Discrete-Time Monitoring")
 
     loomrv_json = find_file(data, "loomrv-discrete-benchmark-json.sh")
     reelay_json = find_file(data, "ryjson-discrete-benchmark.sh")
@@ -241,7 +241,7 @@ def table_single_discrete(data):
 
 def table_single_dense(data, feeder_type, table_num, table_label,
                        loomrv_prefix, reelay_prefix):
-    """Tables 5/6: Single-property dense-time."""
+    """Tables V/VI: Single-property dense-time."""
     print_table_header(f"Table {table_num} — {table_label}")
 
     loomrv = find_file(data, loomrv_prefix)
@@ -272,10 +272,10 @@ def table_single_dense(data, feeder_type, table_num, table_label,
 
 
 def table_multi_property(data_dense, data_discrete):
-    """Tables 6/7: Multi-property monitoring performance."""
+    """Tables VII/VIII: Multi-property monitoring performance."""
 
-    # ── Discrete (Table 6 in the paper) ──
-    print_table_header("Table 6 — Multi-Property Monitoring (Discrete)")
+    # ── Discrete (Table VII in the paper) ──
+    print_table_header("Table VII — Multi-Property Monitoring (Discrete)")
 
     configs_discrete = [
         ("Reelay-Sequential (JSON)",    "ryjson-discrete-benchmark-multi.sh",        "ryjson_Discrete_Sequential_30"),
@@ -318,8 +318,8 @@ def table_multi_property(data_dense, data_discrete):
         speedup = fmt_speedup(baseline_bin, val) if baseline_bin else "—"
         print(f"  {label:<35s} {fmt(val):>10s} {speedup:>10s}")
 
-    # ── Dense (Table 7 in the paper) ──
-    print_table_header("Table 7 — Multi-Property Monitoring (Dense)")
+    # ── Dense (Table VIII in the paper) ──
+    print_table_header("Table VIII — Multi-Property Monitoring (Dense)")
 
     configs_dense = [
         ("Reelay-Sequential (JSON)",    "ryjson-benchmark-dense-multi.sh",        "ryjson_Sequential_30"),
@@ -392,39 +392,37 @@ def main():
         print("Error: No JSON result files found in the specified directories.", file=sys.stderr)
         sys.exit(1)
 
-    # ── Tables 2 & 3: CSE sensitivity ──
+    # ── Tables II & III: CSE sensitivity ──
     if data_discrete:
         table_cse_discrete(data_discrete)
     if data_dense:
         table_cse_dense(data_dense)
 
-    # ── Table 4: Single-property discrete ──
+    # ── Table IV: Single-property discrete ──
     if data_discrete:
         table_single_discrete(data_discrete)
 
-    # ── Table 5: Single-property dense (JSON) ──
+    # ── Table V: Single-property dense (JSON) ──
     if data_dense:
         table_single_dense(
             data_dense,
             feeder_type="JSON",
-            table_num=5,
+            table_num="V",
             table_label="Single-Property Dense-Time (Reelay JSON vs LoomRV JSON)",
             loomrv_prefix="loomrv-benchmark-dense.sh",
             reelay_prefix="ryjson-benchmark-dense.sh",
         )
-        # ── Table 6*: Single-property dense (binary) — paper calls this Table 6 ──
-        # Note: paper's Table 6 is dense-binary single-property. The multi-property
-        # discrete table is labeled separately.
+        # ── Table VI: Single-property dense (binary) ──
         table_single_dense(
             data_dense,
             feeder_type="Binary",
-            table_num="5b",
+            table_num="VI",
             table_label="Single-Property Dense-Time (Reelay Binary vs LoomRV Binary)",
             loomrv_prefix="loomrv-benchmark-dense-binary.sh",
             reelay_prefix="rybinx-benchmark-dense.sh",
         )
 
-    # ── Tables 6 & 7: Multi-property ──
+    # ── Tables VII & VIII: Multi-property ──
     if data_dense or data_discrete:
         table_multi_property(data_dense, data_discrete)
 

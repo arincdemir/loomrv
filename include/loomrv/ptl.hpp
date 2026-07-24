@@ -261,13 +261,14 @@ struct ptl_parser : ptl_grammar{
 
     // Parse without clearing — appends to existing state
     last_error.clear();
-    bool ok = parser.parse(pattern.c_str());
+    int root_index = -1;
+    bool ok = parser.parse(pattern, root_index);
     if (!ok) {
       throw std::runtime_error("Failed to parse pattern: " + pattern + (last_error.empty() ? "" : " (" + last_error + ")"));
     }
 
     // Record root node index for this property
-    monitor.propertyRootNodeIndexes.push_back(static_cast<int>(result_nodes.size() - 1));
+    monitor.propertyRootNodeIndexes.push_back(root_index);
     monitor.propertyCount++;
 
     // Convert only newly added ParsedNodes to DiscreteNodes
@@ -320,13 +321,14 @@ struct ptl_parser : ptl_grammar{
 
     // Parse without clearing — appends to existing state
     last_error.clear();
-    bool ok = parser.parse(pattern.c_str());
+    int root_index = -1;
+    bool ok = parser.parse(pattern, root_index);
     if (!ok) {
       throw std::runtime_error("Failed to parse pattern: " + pattern + (last_error.empty() ? "" : " (" + last_error + ")"));
     }
 
     // Record root node index for this property
-    monitor.propertyRootNodeIndexes.push_back(static_cast<int>(result_nodes.size() - 1));
+    monitor.propertyRootNodeIndexes.push_back(root_index);
     monitor.propertyCount++;
 
     // Convert only newly added ParsedNodes to DenseNodes

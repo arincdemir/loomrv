@@ -106,6 +106,7 @@ add_executable(loomrv
 )
 
 target_link_libraries(loomrv PRIVATE loomrv_lib)
+target_compile_definitions(loomrv PRIVATE LOOMRV_VERSION="${PROJECT_VERSION}")
 
 
 
